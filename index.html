@@ -849,6 +849,91 @@ main:focus { outline: none; }
 .policies { display: grid; gap: var(--space-6); max-width: 760px; }
 .policy__title { font-size: var(--fs-lg); margin-block-end: var(--space-3); }
 .policy p { color: var(--color-text-muted); line-height: 1.95; margin-block-end: var(--space-3); }
+
+/* ===================== Sold out ===================== */
+.soldout-badge { position: absolute; top: 10px; inset-inline-end: 10px; z-index: 1; padding: 0.2rem 0.65rem; border-radius: var(--radius-pill); background: var(--brand-ink); color: var(--neutral-white); font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; line-height: 1.5; direction: ltr; }
+.cover.is-loading { animation: pulse 1.4s ease-in-out infinite; }
+.state--success .state__icon { background: var(--color-primary); color: var(--color-on-primary); }
+.state__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center; }
+
+/* ===================== لوحة الإدارة ===================== */
+.admin { padding-block: var(--space-5) var(--space-7); }
+.admin-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); }
+.admin-card--center { display: grid; justify-items: center; gap: var(--space-3); text-align: center; max-width: 560px; margin-inline: auto; padding-block: var(--space-7); }
+.admin-card__title { font-size: var(--fs-lg); }
+.admin-login { display: grid; gap: var(--space-4); max-width: 420px; margin: var(--space-6) auto; }
+.admin-muted { color: var(--color-text-muted); font-size: var(--fs-sm); line-height: 1.7; }
+.admin-uid { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; justify-content: center; }
+.admin-uid code { padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); background: var(--color-bg-soft); font-size: var(--fs-sm); word-break: break-all; }
+.admin-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); margin-block-end: var(--space-4); }
+.admin-bar__title { font-size: var(--fs-xl); }
+.admin-tabs { display: flex; gap: var(--space-1); border-block-end: 1px solid var(--color-border); margin-block-end: var(--space-5); }
+.admin-tab { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap); padding: 0 var(--space-4); border: 0; background: transparent; font-family: var(--font-display); font-weight: 500; font-size: var(--fs-base); color: var(--color-text-muted); box-shadow: inset 0 -2px 0 transparent; }
+.admin-tab[aria-pressed="true"] { color: var(--color-primary); box-shadow: inset 0 -2px 0 var(--color-primary); }
+.admin-tab__badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: var(--radius-pill); background: var(--color-primary); color: var(--color-on-primary); font-size: 0.75rem; line-height: 22px; text-align: center; }
+.admin-section-head { margin-block-end: var(--space-4); }
+.admin-section-head--row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.admin-section-title { font-size: var(--fs-lg); }
+.admin-chips { margin-block-end: var(--space-4); flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; }
+.chip__count { margin-inline-start: 0.4rem; font-size: var(--fs-xs); opacity: 0.8; }
+.admin-list { display: grid; gap: var(--space-3); }
+.admin-empty { display: grid; gap: var(--space-3); justify-items: start; padding: var(--space-6); border: 1.5px dashed var(--color-border); border-radius: var(--radius-xl); }
+.admin-danger { color: var(--color-text-muted); }
+.admin-danger:hover { color: var(--color-text); }
+
+.order { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.order[open] { border-color: var(--color-border-strong); }
+.order--new { border-inline-start: 4px solid var(--color-primary); }
+.order__summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4); cursor: pointer; list-style: none; }
+.order__summary::-webkit-details-marker { display: none; }
+.order__name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-weight: 500; }
+.order__type { padding: 0 0.55rem; border-radius: var(--radius-sm); background: var(--color-bg-soft); color: var(--color-text-muted); font-family: var(--font-body); font-size: var(--fs-xs); }
+.order__type--wholesale { background: var(--brand-mist); color: var(--brand-ink); }
+.order__side { display: flex; align-items: center; gap: var(--space-3); }
+.status-pill { padding: 0.15rem 0.7rem; border-radius: var(--radius-pill); font-size: var(--fs-xs); font-weight: 500; background: var(--color-bg-soft); color: var(--color-text); }
+.status-pill--new { background: var(--brand-petrol); color: var(--neutral-white); }
+.status-pill--confirmed, .status-pill--shipping { background: var(--brand-mist); color: var(--brand-ink); }
+.status-pill--done { background: var(--brand-ink); color: var(--neutral-white); }
+.status-pill--cancelled { background: transparent; border: 1px dashed var(--brand-sage); color: var(--color-text-muted); }
+.order__body { display: grid; gap: var(--space-4); padding: 0 var(--space-4) var(--space-4); border-block-start: 1px solid var(--color-border); padding-block-start: var(--space-4); }
+.order__contact, .order__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: end; justify-content: space-between; }
+.order__contact { justify-content: flex-start; }
+.order__delete { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.order__items { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+.order__items th, .order__items td { padding: 0.5rem; text-align: start; border-block-end: 1px solid var(--color-border); }
+.order__items th { color: var(--color-text-muted); font-weight: 500; }
+.order__items tfoot td { font-weight: 600; border: 0; }
+.field--inline { min-width: 180px; }
+.select--sm { min-height: 40px; }
+
+.admin-books { display: grid; gap: var(--space-2); }
+.admin-book { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: var(--space-3) var(--space-4); align-items: center; padding: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.admin-book__actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.admin-book__name { font-family: var(--font-display); font-weight: 500; }
+.admin-book.is-soldout .admin-thumb img { opacity: 0.5; }
+.admin-thumb { display: block; width: 60px; aspect-ratio: 600 / 849; border-radius: 6px; overflow: hidden; background: var(--color-bg-soft); }
+.admin-thumb img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 760px) {
+  .admin-book { grid-template-columns: 60px minmax(0, 1fr) auto; }
+  .admin-book__actions { grid-column: auto; }
+}
+.switch { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-2); border: 0; background: transparent; font-family: var(--font-display); font-size: var(--fs-sm); font-weight: 500; color: var(--color-text); }
+.switch__track { position: relative; width: 44px; height: 26px; border-radius: var(--radius-pill); background: var(--brand-sage); transition: background-color var(--dur-fast); }
+.switch__thumb { position: absolute; top: 3px; inset-inline-start: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--neutral-white); transition: inset-inline-start var(--dur-fast) var(--ease-out); }
+.switch[aria-checked="true"] .switch__track { background: var(--brand-petrol); }
+.switch[aria-checked="true"] .switch__thumb { inset-inline-start: 21px; }
+.switch[aria-checked="false"] .switch__label { direction: ltr; }
+.switch:disabled { opacity: 0.6; cursor: wait; }
+
+.book-form { display: grid; gap: var(--space-5); }
+.book-form__grid { display: grid; gap: var(--space-5); }
+@media (min-width: 900px) { .book-form__grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); align-items: start; } }
+.check { display: flex; align-items: center; gap: var(--space-3); min-height: var(--tap); font-size: var(--fs-sm); cursor: pointer; }
+.check input { width: 20px; height: 20px; accent-color: var(--brand-petrol); flex: none; }
+.input--file { padding-block: 0.6rem; min-height: auto; }
+.bf-preview { display: grid; gap: var(--space-2); justify-items: start; }
+.bf-preview__img { width: 200px; aspect-ratio: 600 / 849; height: auto; object-fit: cover; border-radius: var(--radius-md); background: var(--color-bg-soft); border: 1px solid var(--color-border); }
+.form-actions--row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   </style>
 </head>
 <body>
@@ -1323,6 +1408,11 @@ main:focus { outline: none; }
       <div class="container policies" id="policies"></div>
     </section>
 </template>
+<template id="tpl-admin" data-title="لوحة الإدارة" data-flush="false">
+    <section class="admin">
+      <div class="container" id="admin-root"></div>
+    </section>
+</template>
 <template id="tpl-notfound" data-title="الصفحة غير موجودة" data-flush="false">
     <section class="section">
       <div class="container" id="notfound-root"></div>
@@ -1408,6 +1498,19 @@ const SITE = {
 
   /* Meta Pixel — ضع رقم البكسل هنا لتفعيل التتبع، وإلا لا يُحمّل أي كود تتبع. */
   pixelId: '',
+
+  /* ===== قاعدة البيانات ولوحة الإدارة (Firebase — مجاني) =====
+     الصق هنا إعدادات مشروعك من Firebase (firebaseConfig) كما في دليل الإعداد.
+     هذه القيم ليست سرية ويجوز أن تكون ظاهرة؛ الحماية في «قواعد الأمان».
+     طالما apiKey فاضي: الموقع يعرض الكتب المكتوبة في هذا الملف والطلب يكون عبر واتساب. */
+  firebase: {
+    apiKey: 'AIzaSyBkgYEzDQVQvxq-OoK5JeRF8lvSVfaeRXc',
+    authDomain: 'elgel-elsaleh.firebaseapp.com',
+    projectId: 'elgel-elsaleh',
+    storageBucket: 'elgel-elsaleh.firebasestorage.app',
+    messagingSenderId: '548433044092',
+    appId: '1:548433044092:web:c8d2c2fc49ab707aeddff9',
+  },
 
   /* (اختياري لاحقًا) رابط خدمة تستقبل طلبات الحضانات، مثل Google Apps Script.
      لو فاضي، يكتفي النموذج بتجهيز رسالة واتساب. */
@@ -1866,6 +1969,107 @@ const SITE = {
 (() => {
 'use strict';
 /* =====================================================================
+   قاعدة البيانات (Firebase — الخطة المجانية Spark)
+   ---------------------------------------------------------------------
+   - catalog/main : مستند واحد فيه كل الكتب (بدون الصور) → قراءة واحدة لكل زيارة
+   - covers/{id}  : صورة غلاف كل كتاب (مضغوطة) وتُحفظ في متصفح الزائر بعد أول تحميل
+   - orders/{id}  : الطلبات — الزائر يقدر يضيف طلب فقط، والأدمن بس اللي يقرأ ويعدّل
+   لو إعدادات Firebase فاضية، الموقع يشتغل بالكتب المكتوبة داخل الملف وبالطلب عبر واتساب.
+   ===================================================================== */
+const FB_VERSION = '11.10.0';
+const FB_BASE = `https://www.gstatic.com/firebasejs/${FB_VERSION}`;
+const BACKEND = Boolean(SITE.firebase && SITE.firebase.apiKey && SITE.firebase.projectId);
+
+let fbCorePromise = null;
+let fbAuthPromise = null;
+
+function fbCore() {
+  if (!fbCorePromise) {
+    fbCorePromise = Promise.all([import(`${FB_BASE}/firebase-app.js`), import(`${FB_BASE}/firebase-firestore.js`)])
+      .then(([appMod, fs]) => {
+        const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp(SITE.firebase);
+        return { app, fs, db: fs.getFirestore(app) };
+      })
+      .catch((err) => { fbCorePromise = null; throw err; });
+  }
+  return fbCorePromise;
+}
+
+function fbAuth() {
+  if (!fbAuthPromise) {
+    fbAuthPromise = Promise.all([fbCore(), import(`${FB_BASE}/firebase-auth.js`)])
+      .then(([core, au]) => ({ ...core, au, auth: au.getAuth(core.app) }))
+      .catch((err) => { fbAuthPromise = null; throw err; });
+  }
+  return fbAuthPromise;
+}
+
+/* ---------- الكتالوج ---------- */
+async function fetchRemoteCatalog() {
+  const { fs, db } = await fbCore();
+  const snap = await fs.getDoc(fs.doc(db, 'catalog', 'main'));
+  if (!snap.exists()) return null; // لم تُضف كتب بعد → يُستخدم كتالوج الملف
+  const data = snap.data();
+  return Array.isArray(data.products) ? data.products : [];
+}
+
+/* ---------- صور الأغلفة (مع حفظها في متصفح الزائر) ---------- */
+const coverMem = new Map();
+const COVER_KEY = (id) => `ajs-cv:${id}`;
+
+function cachedCover(id, v) {
+  const key = `${id}@${v}`;
+  if (coverMem.has(key)) return coverMem.get(key);
+  try {
+    const raw = localStorage.getItem(COVER_KEY(id));
+    if (raw) {
+      const i = raw.indexOf('|');
+      if (raw.slice(0, i) === String(v)) {
+        const data = raw.slice(i + 1);
+        coverMem.set(key, data);
+        return data;
+      }
+    }
+  } catch { /* التخزين غير متاح */ }
+  return null;
+}
+
+const coverRequests = new Map();
+function loadCover(id, v) {
+  const key = `${id}@${v}`;
+  const hit = cachedCover(id, v);
+  if (hit) return Promise.resolve(hit);
+  if (!coverRequests.has(key)) {
+    coverRequests.set(key, (async () => {
+      const { fs, db } = await fbCore();
+      const snap = await fs.getDoc(fs.doc(db, 'covers', id));
+      const data = snap.exists() ? snap.data().data : null;
+      if (!data) return null;
+      coverMem.set(key, data);
+      try { localStorage.setItem(COVER_KEY(id), `${v}|${data}`); } catch { /* المساحة ممتلئة */ }
+      return data;
+    })().finally(() => coverRequests.delete(key)));
+  }
+  return coverRequests.get(key);
+}
+
+/* ---------- الطلبات ---------- */
+async function createOrder(order) {
+  const { fs, db } = await fbCore();
+  await fs.addDoc(fs.collection(db, 'orders'), { ...order, status: 'new', createdAt: fs.serverTimestamp() });
+}
+
+/* رقم الموبايل المصري بصيغة 01XXXXXXXXX */
+function normalizePhone(v) {
+  let n = String(v || '').replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\-().]/g, '');
+  if (n.startsWith('+20')) n = `0${n.slice(3)}`;
+  else if (n.startsWith('0020')) n = `0${n.slice(4)}`;
+  else if (n.startsWith('20') && n.length === 12) n = `0${n.slice(2)}`;
+  return n;
+}
+const PHONE_RE = /^01[0125]\d{8}$/;
+
+/* =====================================================================
    كتالوج الكتب — يُقرأ من كتل البيانات الموجودة داخل نفس الملف
    (data-products و data-categories) ويُتحقق منه قبل العرض.
    ===================================================================== */
@@ -1959,10 +2163,12 @@ function normalizeProduct(raw, ctx) {
 let catalogCache = null;
 let catalogPromise = null;
 
-function buildCatalog() {
+function buildCatalog(remote = null) {
   const issues = [];
   const rawCategories = readBlock('data-categories');
-  const rawProducts = readBlock('data-products');
+  const rawProducts = remote
+    ? remote.map((p) => ({ ...p, cover: p && p.coverV ? `fs:${p.coverV}` : '' }))
+    : readBlock('data-products');
   const categories = (Array.isArray(rawCategories) ? rawCategories : []).map((c) => normalizeCategory(c, issues)).filter(Boolean);
   const categoryById = new Map(categories.map((c) => [c.id, c]));
   const ctx = {
@@ -1983,6 +2189,7 @@ function buildCatalog() {
     levels: SITE.levels.filter((l) => usedLevels.has(l.id)),
     ageGroups: SITE.ageGroups.filter((a) => usedAges.has(a.id)),
     hasDemo: products.some((p) => p.isDemo),
+    source: remote ? 'firebase' : 'file',
     hasDates: products.some((p) => p.createdAt),
     issues,
   };
@@ -1991,7 +2198,8 @@ function buildCatalog() {
 /** يعيد الكتالوج (كـ Promise حتى تبقى طريقة الاستخدام واحدة في كل الصفحات) */
 function getCatalog() {
   if (!catalogPromise) {
-    catalogPromise = new Promise((resolve) => resolve(buildCatalog()))
+    catalogPromise = (BACKEND ? fetchRemoteCatalog() : Promise.resolve(null))
+      .then((remote) => buildCatalog(remote))
       .then((c) => { catalogCache = c; return c; })
       .catch((err) => { catalogPromise = null; throw err; });
   }
@@ -2036,7 +2244,28 @@ function placeholderCover(product) {
 }
 
 /** مصدر صورة الغلاف: الصورة الحقيقية إن وُجدت، وإلا غلاف مؤقت مرسوم */
-const coverSrc = (product) => asset(product.cover) || placeholderCover(product);
+const remoteCoverV = (product) => (product.cover && product.cover.startsWith('fs:') ? product.cover.slice(3) : null);
+const coverSrc = (product) => {
+  const v = remoteCoverV(product);
+  if (v) return cachedCover(product.id, v);
+  return asset(product.cover) || placeholderCover(product);
+};
+/** صورة غلاف تُحمَّل من قاعدة البيانات لو مش محفوظة في المتصفح */
+function hydrateCover(img, product) {
+  const v = remoteCoverV(product);
+  if (!v || img.getAttribute('src')) return;
+  const frame = img.closest('.cover');
+  frame?.classList.add('is-loading');
+  loadCover(product.id, v)
+    .then((d) => { img.src = d || placeholderCover(product); })
+    .catch(() => { img.src = placeholderCover(product); })
+    .finally(() => frame?.classList.remove('is-loading'));
+}
+function coverImg(product, attrs = {}) {
+  const img = el('img', { ...attrs, src: coverSrc(product) });
+  if (!img.getAttribute('src')) queueMicrotask(() => hydrateCover(img, product));
+  return img;
+}
 
 /* =====================================================================
    أدوات الواجهة المشتركة
@@ -2136,7 +2365,7 @@ function setMeta({ title, description, noindex = false }) {
 function coverEl(product, { eager = false, size = 'card' } = {}) {
   const frame = el('div', { class: `cover cover--${size}` });
   const src = coverSrc(product);
-  if (src) {
+  if (src || remoteCoverV(product)) {
     const img = el('img', {
       src,
       alt: `غلاف كتاب ${product.name}`,
@@ -2147,10 +2376,12 @@ function coverEl(product, { eager = false, size = 'card' } = {}) {
     });
     img.addEventListener('error', () => img.replaceWith(coverFallback()), { once: true });
     frame.append(img);
+    if (!src) hydrateCover(img, product);
   } else {
     frame.append(coverFallback());
   }
   if (product.isDemo) frame.append(el('span', { class: 'demo-badge', text: 'بيانات تجريبية' }));
+  if (!product.available && size !== 'thumb') frame.append(el('span', { class: 'soldout-badge', text: 'Sold out' }));
   return frame;
 }
 
@@ -2186,7 +2417,7 @@ function bookCard(product, catalog, { onAdd } = {}) {
       )
     );
   } else {
-    actions.append(el('span', { class: 'stock-note', text: 'غير متاح حاليًا' }));
+    actions.append(el('span', { class: 'stock-note', text: 'نفدت الكمية' }));
   }
   actions.append(el('a', { class: 'btn btn--ghost btn--sm', href, 'aria-label': `تفاصيل «${product.name}»` }, 'التفاصيل'));
 
@@ -2793,7 +3024,7 @@ function setCanonical() {
 function addToCart(catalog, product, qty = 1) {
   const res = addItem(catalog, product.id, qty);
   if (!res.ok) {
-    toast(res.reason === 'unavailable' ? 'هذا الكتاب غير متاح حاليًا.' : 'تعذّر إضافة الكتاب.');
+    toast(res.reason === 'unavailable' ? 'هذا الكتاب نفدت كميته (Sold out).' : 'تعذّر إضافة الكتاب.');
     return res;
   }
   const msg = res.capped
@@ -2890,7 +3121,7 @@ PAGES.home = () => {
       if (picks.length < 3) heroVisual.remove();
       else heroVisual.replaceChildren(el('div', { class: 'shelf', 'aria-hidden': 'true' },
         [picks[1], picks[0], picks[2]].map((p) => el('a', { class: 'shelf__book', href: pageUrl('product.html', { id: p.id }), tabindex: '-1' },
-          el('img', { src: coverSrc(p), alt: '', width: 600, height: 750 })))));
+          coverImg(p, { alt: '', width: 600, height: 849 })))));
     }
     catGrid.replaceChildren(...catalog.categories.map((c) => {
       let mark;
@@ -3067,7 +3298,7 @@ PAGES.product = (route) => {
       ['المرحلة', product.level.length ? product.level.map(levelName).join('، ') : null],
       ['السن', product.ageGroup ? ageName(product.ageGroup) : null],
       ['عدد الصفحات', product.pageCount ? `${formatNumber(product.pageCount)} صفحة` : null],
-      ['الحالة', product.available ? 'متاح للطلب' : 'غير متاح حاليًا'],
+      ['الحالة', product.available ? 'متاح للطلب' : 'نفدت الكمية (Sold out)'],
     ].filter(([, v]) => v);
     return el('dl', { class: 'specs' }, rows.map(([k, v]) => el('div', { class: 'specs__row' }, el('dt', { text: k }), el('dd', {}, el('bdi', { text: v })))));
   }
@@ -3086,7 +3317,7 @@ PAGES.product = (route) => {
           icon('shopping-bag'), 'أضف إلى السلة'));
     } else {
       buy = el('div', { class: 'form-alert' }, icon('info'),
-        el('p', {}, el('strong', { text: 'هذا الكتاب غير متاح حاليًا. ' }), 'يمكنك التواصل معنا للسؤال عن موعد توفره.'));
+        el('p', {}, el('strong', { text: 'نفدت الكمية (Sold out). ' }), 'يمكنك التواصل معنا للسؤال عن موعد توفره.'));
     }
     const hint = el('aside', { class: 'nursery-hint' },
       el('span', { class: 'nursery-hint__icon' }, icon('school')),
@@ -3190,7 +3421,7 @@ PAGES.cart = (route, signal) => {
       }, icon('trash-2')));
     return row;
   }
-  function summary() {
+  function summaryWhatsApp() {
     const { count, total } = getLines(catalog);
     const countEl = el('span', { text: copiesLabel(count) });
     const totalEl = el('bdi', { class: 'price price--lg', text: formatPrice(total) });
@@ -3231,6 +3462,86 @@ PAGES.cart = (route, signal) => {
         : 'المتصفح يمنع حفظ السلة، لذلك ستُفقد عند إغلاق الصفحة. أرسل طلبك قبل المغادرة.'),
     ].filter(Boolean));
   }
+  /* الطلب المباشر (لما قاعدة البيانات مفعّلة) */
+  function summaryOrder() {
+    const { count, total } = getLines(catalog);
+    const countEl = el('span', { text: copiesLabel(count) });
+    const totalEl = el('bdi', { class: 'price price--lg', text: formatPrice(total) });
+    refs = { count: countEl, total: totalEl };
+    const input = (id, attrs) => el('input', { class: 'input', id, type: 'text', ...attrs });
+    const name = input('o-name', { autocomplete: 'name', maxlength: '80' });
+    const phone = input('o-phone', { type: 'tel', inputmode: 'tel', autocomplete: 'tel', dir: 'ltr', maxlength: '16', placeholder: '01XXXXXXXXX' });
+    const gov = el('select', { class: 'select', id: 'o-gov', autocomplete: 'address-level1' },
+      el('option', { value: '', text: 'اختر المحافظة' }), GOVERNORATES.map((g) => el('option', { value: g, text: g })));
+    const address = el('textarea', { class: 'textarea', id: 'o-address', rows: '2', maxlength: '300', autocomplete: 'street-address' });
+    const notes = el('textarea', { class: 'textarea', id: 'o-notes', rows: '2', maxlength: '600' });
+    const fld = (label, ctrl, req = true) => el('div', { class: 'field' },
+      el('label', { class: 'label', for: ctrl.id }, label, req ? el('span', { class: 'req', text: '*' }) : el('span', { class: 'opt', text: '(اختياري)' })), ctrl);
+    [name, phone, address].forEach((x) => x.addEventListener('input', () => setFieldError(x, '')));
+    gov.addEventListener('change', () => setFieldError(gov, ''));
+    const msg = el('div', { role: 'alert' });
+    const btn = el('button', { type: 'submit', class: 'btn btn--primary btn--lg btn--block' }, icon('check'), 'تأكيد الطلب');
+    const form = el('form', { class: 'cart-summary__fields', novalidate: true },
+      el('p', { class: 'cart-summary__fields-title', text: 'بيانات التوصيل' }),
+      fld('الاسم', name), fld('رقم الموبايل', phone), fld('المحافظة', gov), fld('العنوان بالتفصيل', address), fld('ملاحظات', notes, false),
+      msg, btn);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.replaceChildren();
+      let first = null;
+      const fail = (x, m) => { setFieldError(x, m); first = first || x; };
+      const ph = normalizePhone(phone.value);
+      if (name.value.trim().length < 2) fail(name, 'اكتب اسمك.');
+      if (!PHONE_RE.test(ph)) fail(phone, 'اكتب رقم موبايل مصري من 11 رقمًا يبدأ بـ 01.');
+      if (!gov.value) fail(gov, 'اختر المحافظة.');
+      if (address.value.trim().length < 5) fail(address, 'اكتب العنوان بالتفصيل.');
+      if (first) { first.focus(); return; }
+
+      const data = getLines(catalog);
+      if (!data.lines.length) return;
+      const ref = orderRef('JS');
+      btn.disabled = true;
+      btn.replaceChildren('جارٍ إرسال الطلب…');
+      try {
+        await createOrder({
+          type: 'retail', ref, name: name.value.trim(), phone: ph, governorate: gov.value,
+          address: address.value.trim(), notes: notes.value.trim(),
+          items: data.lines.map((l) => ({ id: l.product.id, name: l.product.name, price: l.product.price, qty: l.qty })),
+          count: data.count, total: data.total,
+        });
+        track('Purchase', { value: data.total, num_items: data.count, content_ids: data.lines.map((l) => l.product.id) });
+        const waText = `${buildOrderMessage(data, { name: name.value.trim(), governorate: gov.value }, ref)}`;
+        clearCart();
+        const wa = isWhatsAppReady() ? waLink(waText) : null;
+        root.replaceChildren(el('div', { class: 'state state--success', role: 'status', tabindex: '-1' },
+          el('span', { class: 'state__icon' }, icon('check')),
+          el('h3', { class: 'state__title', text: 'تم استلام طلبك' }),
+          el('p', { class: 'state__text' }, 'رقم الطلب ', el('bdi', { text: ref }), `. سنتواصل معك على ${ph} لتأكيد الطلب وموعد التوصيل.`),
+          el('div', { class: 'state__actions' },
+            wa ? el('a', { class: 'btn btn--outline', href: wa, target: '_blank', rel: 'noopener' }, icon('whatsapp'), 'تابع على واتساب') : null,
+            el('a', { class: 'btn btn--ghost', href: pageUrl('books.html') }, 'متابعة التسوق'))));
+        $('.state', root).focus();
+      } catch (err) {
+        console.error(err);
+        btn.disabled = false;
+        btn.replaceChildren(icon('check'), 'تأكيد الطلب');
+        msg.replaceChildren(el('div', { class: 'form-alert form-alert--error' }, icon('circle-alert'),
+          el('p', { text: 'تعذّر إرسال الطلب. تحقق من اتصالك بالإنترنت وأعد المحاولة.' })));
+      }
+    });
+
+    return el('aside', { class: 'cart-summary', 'aria-labelledby': 'summary-title' },
+      el('h2', { class: 'cart-summary__title', id: 'summary-title', text: 'ملخص الطلب' }),
+      el('dl', { class: 'cart-summary__rows' },
+        el('div', {}, el('dt', { text: 'عدد النسخ' }), el('dd', {}, countEl)),
+        el('div', { class: 'cart-summary__total' }, el('dt', { text: 'إجمالي سعر الكتب' }), el('dd', {}, totalEl))),
+      el('p', { class: 'hint', text: 'الإجمالي المعروض هو مجموع أسعار الكتب فقط.' }),
+      form,
+      el('p', { class: 'cart-summary__note' }, icon('info', 'icon--sm'), 'بياناتك تُستخدم لتوصيل الطلب والتواصل معك بخصوصه فقط.'));
+  }
+  const summary = () => (BACKEND ? summaryOrder() : summaryWhatsApp());
+
   function renderAll(removedNames = []) {
     const { lines } = getLines(catalog);
     root.removeAttribute('aria-busy');
@@ -3287,7 +3598,7 @@ PAGES.wholesale = (route) => {
       const items = catalog.products.filter((p) => p.category === c.id);
       if (!items.length) return;
       select.append(el('optgroup', { label: c.name }, items.map((p) =>
-        el('option', { value: p.id, disabled: !p.available, selected: p.id === selected, text: p.available ? p.name : `${p.name} (غير متاح حاليًا)` }))));
+        el('option', { value: p.id, disabled: !p.available, selected: p.id === selected, text: p.available ? p.name : `${p.name} (Sold out)` }))));
     });
     return select;
   }
@@ -3318,13 +3629,6 @@ PAGES.wholesale = (route) => {
     updateRemoveButtons();
     return row;
   }
-  const normalizePhone = (v) => {
-    let n = toLatinDigits(v).replace(/[\s\-().]/g, '');
-    if (n.startsWith('+20')) n = `0${n.slice(3)}`;
-    else if (n.startsWith('0020')) n = `0${n.slice(4)}`;
-    else if (n.startsWith('20') && n.length === 12) n = `0${n.slice(2)}`;
-    return n;
-  };
   function validate() {
     const errors = [];
     const fail = (f, msg) => { setFieldError(f, msg); errors.push({ field: f, msg }); };
@@ -3344,7 +3648,7 @@ PAGES.wholesale = (route) => {
       if (!select.value && !qtyInput.value) return;
       if (!select.value) { fail(select, 'اختر الكتاب أو احذف هذا السطر.'); return; }
       const product = catalog.productById.get(select.value);
-      if (!product || !product.available) { fail(select, 'هذا الكتاب غير متاح حاليًا.'); return; }
+      if (!product || !product.available) { fail(select, 'هذا الكتاب نفدت كميته (Sold out).'); return; }
       if (!Number.isInteger(qty) || qty < 1) { fail(qtyInput, 'اكتب عدد النسخ.'); return; }
       if (qty > WS_MAX) { fail(qtyInput, `الحد الأقصى ${formatNumber(WS_MAX)} نسخة للكتاب في الطلب الواحد.`); return; }
       const prev = items.get(product.id);
@@ -3359,6 +3663,8 @@ PAGES.wholesale = (route) => {
       data: {
         org, contact, phone,
         area: [gov.value, field('area').value.trim()].filter(Boolean).join(' — '),
+        governorate: gov.value,
+        district: field('area').value.trim(),
         items: [...items.values()],
         other,
         notes: field('notes').value.trim(),
@@ -3385,6 +3691,7 @@ PAGES.wholesale = (route) => {
     errorsBox.hidden = true;
     const ref = orderRef('WS');
     const text = buildWholesaleMessage(data, ref);
+    if (BACKEND) { submitWholesale(data, ref, text); return; }
     if (SITE.formEndpoint) {
       fetch(SITE.formEndpoint, {
         method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -3396,6 +3703,40 @@ PAGES.wholesale = (route) => {
     result.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
   });
   addRowBtn.addEventListener('click', () => $('select', addRow()).focus());
+
+  /* حفظ طلب الحضانة في قاعدة البيانات */
+  const submitBtn = $('#ws-submit');
+  if (BACKEND) {
+    submitBtn.replaceChildren(icon('send'), 'إرسال طلب عرض السعر');
+    const note = $('.form-actions .hint', form);
+    if (note) note.textContent = 'يصلنا الطلب مباشرة، ونتواصل معك على رقم الموبايل بعرض السعر.';
+  }
+  async function submitWholesale(data, ref, text) {
+    submitBtn.disabled = true;
+    submitBtn.replaceChildren('جارٍ الإرسال…');
+    const items = data.items.map((i) => ({ id: i.product.id, name: i.product.name, price: i.product.price, qty: i.qty }));
+    try {
+      await createOrder({
+        type: 'wholesale', ref, org: data.org, name: data.contact, phone: data.phone, governorate: data.governorate,
+        address: data.district, notes: data.notes, other: data.other, items,
+        count: items.reduce((s, i) => s + i.qty, 0), total: items.reduce((s, i) => s + i.price * i.qty, 0),
+      });
+      track('Lead', { content_category: 'wholesale', num_items: items.reduce((s, i) => s + i.qty, 0) });
+      const wa = isWhatsAppReady() ? waLink(text) : null;
+      form.replaceChildren(el('div', { class: 'state state--success', role: 'status', tabindex: '-1' },
+        el('span', { class: 'state__icon' }, icon('check')),
+        el('h3', { class: 'state__title', text: 'تم استلام طلبك' }),
+        el('p', { class: 'state__text' }, 'رقم الطلب ', el('bdi', { text: ref }), `. سنتواصل معك على ${data.phone} بعرض السعر.`),
+        wa ? el('a', { class: 'btn btn--outline', href: wa, target: '_blank', rel: 'noopener' }, icon('whatsapp'), 'تابع على واتساب') : null));
+      $('.state', form).focus();
+    } catch (err) {
+      console.error(err);
+      submitBtn.disabled = false;
+      submitBtn.replaceChildren(icon('send'), 'إرسال طلب عرض السعر');
+      result.replaceChildren(el('div', { class: 'form-alert form-alert--error' }, icon('circle-alert'),
+        el('p', { text: 'تعذّر إرسال الطلب. تحقق من اتصالك بالإنترنت وأعد المحاولة.' })));
+    }
+  }
 
   getCatalog().then((data) => {
     catalog = data;
@@ -3474,6 +3815,612 @@ PAGES.notfound = () => {
 };
 
 /* =====================================================================
+   لوحة الإدارة — #/admin
+   تسجيل الدخول بحساب Firebase، استلام الطلبات، إدارة الكتب و Sold out.
+   الحماية الحقيقية في «قواعد الأمان» على Firebase، وليست في هذا الكود.
+   ===================================================================== */
+const ORDER_STATUSES = [
+  { id: 'new', name: 'جديد' },
+  { id: 'confirmed', name: 'مؤكد' },
+  { id: 'shipping', name: 'جاري التوصيل' },
+  { id: 'done', name: 'تم التسليم' },
+  { id: 'cancelled', name: 'ملغي' },
+];
+const statusName = (id) => ORDER_STATUSES.find((s) => s.id === id)?.name || id;
+const COVER_RATIO = 600 / 849; // نسبة أغلفة السلسلة (A3 طولي)
+const dateFmt = new Intl.DateTimeFormat('ar-EG-u-nu-latn', { dateStyle: 'medium', timeStyle: 'short' });
+
+/* ---------- تجهيز صورة الغلاف: قص للنسبة الموحدة + ضغط ---------- */
+let pdfjsPromise = null;
+function loadPdfJs() {
+  if (!pdfjsPromise) {
+    pdfjsPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = () => {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = () => { pdfjsPromise = null; reject(new Error('pdfjs')); };
+      document.head.append(s);
+    });
+  }
+  return pdfjsPromise;
+}
+
+/** يحوّل ملف (صورة أو PDF) أو رابط صورة إلى Canvas */
+async function sourceToCanvas(source) {
+  if (source instanceof File && (source.type === 'application/pdf' || /\.pdf$/i.test(source.name))) {
+    const pdfjs = await loadPdfJs();
+    const pdf = await pdfjs.getDocument({ data: await source.arrayBuffer() }).promise;
+    const page = await pdf.getPage(1);
+    const base = page.getViewport({ scale: 1 });
+    const viewport = page.getViewport({ scale: Math.min(3, 1400 / base.width) });
+    const c = document.createElement('canvas');
+    c.width = Math.round(viewport.width);
+    c.height = Math.round(viewport.height);
+    await page.render({ canvasContext: c.getContext('2d'), viewport }).promise;
+    return c;
+  }
+  const url = typeof source === 'string' ? source : URL.createObjectURL(source);
+  try {
+    const img = await new Promise((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = () => reject(new Error('image'));
+      i.src = url;
+    });
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth;
+    c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    return c;
+  } finally {
+    if (typeof source !== 'string') URL.revokeObjectURL(url);
+  }
+}
+
+/**
+ * part: 'full' | 'left' | 'right' — لو الملف فيه الغلاف الأمامي والخلفي جنب بعض
+ * النتيجة: صورة WebP بعرض 480 بكسل وبنفس نسبة أغلفة السلسلة
+ */
+function canvasToCover(src, part = 'full', maxW = 480) {
+  let sx = 0;
+  let sw = src.width;
+  if (part === 'left') sw = Math.floor(src.width / 2);
+  if (part === 'right') { sx = Math.ceil(src.width / 2); sw = src.width - sx; }
+  let sy = 0;
+  let sh = src.height;
+  const ratio = sw / sh;
+  if (Math.abs(ratio - COVER_RATIO) / COVER_RATIO > 0.02) {
+    if (ratio > COVER_RATIO) { const w = Math.round(sh * COVER_RATIO); sx += Math.round((sw - w) / 2); sw = w; }
+    else { const h = Math.round(sw / COVER_RATIO); sy += Math.round((sh - h) / 2); sh = h; }
+  }
+  const w = Math.min(maxW, sw);
+  const h = Math.round(w / COVER_RATIO);
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, w, h);
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, sx, sy, sw, sh, 0, 0, w, h);
+  for (const q of [0.8, 0.7, 0.6, 0.5]) {
+    let d = c.toDataURL('image/webp', q);
+    if (!d.startsWith('data:image/webp')) d = c.toDataURL('image/jpeg', q);
+    if (d.length < 200000) return d;
+  }
+  return c.toDataURL('image/jpeg', 0.45);
+}
+
+PAGES.admin = (route, signal) => {
+  setMeta({ title: 'لوحة الإدارة', noindex: true });
+  const root = $('#admin-root');
+  const cleanups = [];
+  const cleanupAll = () => { while (cleanups.length) { try { cleanups.pop()(); } catch { /* */ } } };
+  signal.addEventListener('abort', () => { cleanupAll(); authOff?.(); document.title = `لوحة الإدارة | ${SITE.name}`; });
+  let authOff = null;
+
+  const box = (iconName, title, text, ...extra) => el('div', { class: 'admin-card admin-card--center' },
+    el('span', { class: 'state__icon' }, icon(iconName)), el('h2', { class: 'admin-card__title', text: title }),
+    text ? el('p', { class: 'admin-muted', text }) : null, ...extra);
+
+  if (!BACKEND) {
+    root.replaceChildren(box('info', 'لوحة الإدارة غير مفعّلة بعد',
+      'لتفعيلها: أنشئ مشروع Firebase مجاني، ثم انسخ إعداداته (firebaseConfig) والصقها في خانة firebase داخل «الإعدادات» في ملف index.html، كما في دليل الإعداد.'));
+    return;
+  }
+
+  root.replaceChildren(box('rotate-ccw', 'جارٍ الاتصال…', ''));
+  fbAuth().then((F) => {
+    authOff = F.au.onAuthStateChanged(F.auth, (user) => {
+      cleanupAll();
+      if (signal.aborted) return;
+      if (user) renderPanel(F, user); else renderLogin(F);
+    });
+  }).catch((err) => {
+    console.error(err);
+    root.replaceChildren(box('circle-alert', 'تعذّر الاتصال بقاعدة البيانات', 'تحقق من اتصالك بالإنترنت ومن إعدادات firebase في ملف index.html، ثم أعد تحميل الصفحة.'));
+  });
+
+  /* ======================= تسجيل الدخول ======================= */
+  function renderLogin(F) {
+    const email = el('input', { class: 'input', id: 'ad-email', type: 'email', autocomplete: 'username', dir: 'ltr', required: true });
+    const pass = el('input', { class: 'input', id: 'ad-pass', type: 'password', autocomplete: 'current-password', dir: 'ltr', required: true });
+    const msg = el('div', { role: 'alert' });
+    const btn = el('button', { type: 'submit', class: 'btn btn--primary btn--lg btn--block' }, 'تسجيل الدخول');
+    const form = el('form', { class: 'admin-card admin-login', novalidate: true },
+      el('h1', { class: 'admin-card__title', text: 'دخول لوحة الإدارة' }),
+      el('div', { class: 'field' }, el('label', { class: 'label', for: 'ad-email', text: 'البريد الإلكتروني' }), email),
+      el('div', { class: 'field' }, el('label', { class: 'label', for: 'ad-pass', text: 'كلمة المرور' }), pass),
+      msg, btn);
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.replaceChildren();
+      if (!email.value.trim() || !pass.value) {
+        msg.replaceChildren(alertBox('اكتب البريد الإلكتروني وكلمة المرور.'));
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'جارٍ الدخول…';
+      try {
+        await F.au.signInWithEmailAndPassword(F.auth, email.value.trim(), pass.value);
+      } catch (err) {
+        const code = err?.code || '';
+        const text = code.includes('too-many-requests') ? 'محاولات كثيرة. انتظر دقائق ثم حاول مرة أخرى.'
+          : code.includes('network') ? 'تعذّر الاتصال. تحقق من الإنترنت.'
+          : 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+        msg.replaceChildren(alertBox(text));
+        btn.disabled = false;
+        btn.textContent = 'تسجيل الدخول';
+      }
+    });
+    root.replaceChildren(form);
+    email.focus();
+  }
+
+  const alertBox = (text) => el('div', { class: 'form-alert form-alert--error' }, icon('circle-alert'), el('p', { text }));
+
+  /* ======================= اللوحة ======================= */
+  function renderPanel(F, user) {
+    const { fs, db } = F;
+    let tab = route.params.get('tab') === 'books' ? 'books' : 'orders';
+    const ordersBadge = el('span', { class: 'admin-tab__badge', hidden: true });
+    const tabBtn = (id, label, extra) => el('button', { type: 'button', class: 'admin-tab', dataset: { tab: id }, 'aria-pressed': String(tab === id) }, label, extra || null);
+    const tabs = el('div', { class: 'admin-tabs', role: 'group', 'aria-label': 'أقسام اللوحة' },
+      tabBtn('orders', 'الطلبات', ordersBadge), tabBtn('books', 'الكتب'));
+    const body = el('div', { class: 'admin-body' });
+    const bar = el('div', { class: 'admin-bar' },
+      el('div', {}, el('h1', { class: 'admin-bar__title', text: 'لوحة الإدارة' }), el('p', { class: 'admin-muted' }, el('bdi', { dir: 'ltr', text: user.email || '' }))),
+      el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: () => F.au.signOut(F.auth) }, 'تسجيل الخروج'));
+    root.replaceChildren(bar, tabs, body);
+
+    const ordersView = el('div');
+    const booksView = el('div');
+    body.replaceChildren(ordersView, booksView);
+    const show = () => {
+      ordersView.hidden = tab !== 'orders';
+      booksView.hidden = tab !== 'books';
+      $$('.admin-tab', tabs).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tab === tab)));
+      history.replaceState(null, '', tab === 'books' ? '#/admin?tab=books' : '#/admin');
+    };
+    tabs.addEventListener('click', (e) => {
+      const b = e.target.closest('.admin-tab');
+      if (!b) return;
+      tab = b.dataset.tab;
+      show();
+    });
+    show();
+
+    const notAdmin = () => root.replaceChildren(box('circle-alert', 'هذا الحساب ليس حساب الأدمن',
+      'أضف رقم الحساب (UID) التالي في قواعد الأمان على Firebase مكان ADMIN_UID ثم اضغط Publish، وبعدها أعد تحميل الصفحة.',
+      el('div', { class: 'admin-uid' }, el('code', { dir: 'ltr', text: user.uid }),
+        el('button', { type: 'button', class: 'btn btn--outline btn--sm', onclick: (e) => copyText(user.uid, e.currentTarget) }, 'نسخ')),
+      el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: () => F.au.signOut(F.auth) }, 'تسجيل الخروج')));
+
+    ordersPanel(F, ordersView, ordersBadge, notAdmin);
+    booksPanel(F, booksView, notAdmin);
+  }
+
+  function copyText(text, btn) {
+    const done = () => { const t = btn.textContent; btn.textContent = 'تم النسخ'; setTimeout(() => { btn.textContent = t; }, 1500); };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(() => {});
+  }
+
+  /* ======================= الطلبات ======================= */
+  function ordersPanel(F, view, badge, notAdmin) {
+    const { fs, db } = F;
+    let orders = [];
+    let filter = 'new';
+    const chipsWrap = el('div', { class: 'chip-row admin-chips', role: 'group', 'aria-label': 'تصفية حسب الحالة' });
+    const list = el('div', { class: 'admin-list', 'aria-live': 'polite' });
+    const head = el('div', { class: 'admin-section-head' },
+      el('h2', { class: 'admin-section-title', text: 'الطلبات' }),
+      el('p', { class: 'admin-muted', text: 'الطلبات الجديدة تظهر هنا تلقائيًا بدون تحديث الصفحة.' }));
+    view.replaceChildren(head, chipsWrap, list);
+    list.replaceChildren(el('p', { class: 'admin-muted', text: 'جارٍ تحميل الطلبات…' }));
+
+    chipsWrap.addEventListener('click', (e) => {
+      const c = e.target.closest('.chip');
+      if (!c) return;
+      filter = c.dataset.value;
+      render();
+    });
+
+    const q = fs.query(fs.collection(db, 'orders'), fs.orderBy('createdAt', 'desc'), fs.limit(300));
+    const off = fs.onSnapshot(q, (snap) => {
+      orders = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      render();
+    }, (err) => {
+      console.error(err);
+      if (err?.code === 'permission-denied') notAdmin();
+      else list.replaceChildren(alertBox('تعذّر تحميل الطلبات. تحقق من الإنترنت ثم أعد تحميل الصفحة.'));
+    });
+    cleanups.push(off);
+
+    function render() {
+      const counts = Object.fromEntries(ORDER_STATUSES.map((s) => [s.id, 0]));
+      orders.forEach((o) => { counts[o.status] = (counts[o.status] || 0) + 1; });
+      const newCount = counts.new || 0;
+      badge.textContent = formatNumber(newCount);
+      badge.hidden = newCount === 0;
+      document.title = `${newCount ? `(${newCount}) ` : ''}لوحة الإدارة | ${SITE.name}`;
+
+      const chip = (value, label, n) => el('button', { type: 'button', class: 'chip', dataset: { value }, 'aria-pressed': String(filter === value) },
+        label, el('span', { class: 'chip__count', text: formatNumber(n) }));
+      chipsWrap.replaceChildren(...ORDER_STATUSES.map((s) => chip(s.id, s.name, counts[s.id] || 0)), chip('all', 'الكل', orders.length));
+
+      const shown = filter === 'all' ? orders : orders.filter((o) => o.status === filter);
+      if (!shown.length) {
+        list.replaceChildren(el('div', { class: 'admin-empty' },
+          el('p', { text: orders.length ? `لا توجد طلبات «${filter === 'all' ? 'الكل' : statusName(filter)}».` : 'لم تصل أي طلبات بعد. أول طلب من الموقع سيظهر هنا.' })));
+        return;
+      }
+      const open = new Set($$('.order[open]', list).map((d) => d.dataset.id));
+      list.replaceChildren(...shown.map((o) => orderCard(o, open.has(o.id))));
+    }
+
+    function orderCard(o, isOpen) {
+      const when = o.createdAt?.toDate ? dateFmt.format(o.createdAt.toDate()) : '';
+      const phone = String(o.phone || '');
+      const items = Array.isArray(o.items) ? o.items : [];
+      const statusSel = el('select', { class: 'select select--sm', id: `st-${o.id}`, 'aria-label': 'حالة الطلب' },
+        ORDER_STATUSES.map((s) => el('option', { value: s.id, selected: s.id === o.status, text: s.name })));
+      statusSel.addEventListener('change', async () => {
+        statusSel.disabled = true;
+        try { await fs.updateDoc(fs.doc(db, 'orders', o.id), { status: statusSel.value }); toast(`الطلب ${o.ref || ''}: ${statusName(statusSel.value)}`); }
+        catch (err) { console.error(err); toast('تعذّر تغيير الحالة.'); statusSel.value = o.status; }
+        statusSel.disabled = false;
+      });
+
+      const delWrap = el('div', { class: 'order__delete' });
+      const askDelete = () => {
+        delWrap.replaceChildren(el('span', { class: 'admin-muted', text: 'حذف الطلب نهائيًا؟' }),
+          el('button', { type: 'button', class: 'btn btn--outline btn--sm', onclick: async () => {
+            try { await fs.deleteDoc(fs.doc(db, 'orders', o.id)); toast('تم حذف الطلب.'); }
+            catch (err) { console.error(err); toast('تعذّر حذف الطلب.'); }
+          } }, 'حذف'),
+          el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: resetDelete }, 'إلغاء'));
+      };
+      const resetDelete = () => delWrap.replaceChildren(el('button', { type: 'button', class: 'btn btn--ghost btn--sm admin-danger', onclick: askDelete }, icon('trash-2'), 'حذف الطلب'));
+      resetDelete();
+
+      const wa = PHONE_RE.test(phone) ? `https://wa.me/2${phone}?text=${encodeURIComponent(`مرحبًا ${o.name || ''}، بخصوص طلبك رقم ${o.ref || ''} من ${SITE.name}.`)}` : null;
+      const rows = [
+        ['الاسم', o.name],
+        o.type === 'wholesale' ? ['الحضانة / الجهة', o.org] : null,
+        ['الموبايل', phone],
+        ['المحافظة', o.governorate],
+        ['العنوان', o.address],
+        ['ملاحظات', o.notes],
+        ['كتب أخرى', o.other],
+      ].filter((r) => r && r[1]);
+
+      return el('details', { class: `order order--${o.status}`, dataset: { id: o.id }, open: isOpen || null },
+        el('summary', { class: 'order__summary' },
+          el('div', { class: 'order__main' },
+            el('p', { class: 'order__name' }, el('span', { text: o.type === 'wholesale' ? (o.org || o.name || '') : (o.name || '') }),
+              el('span', { class: `order__type order__type--${o.type}`, text: o.type === 'wholesale' ? 'حضانة / جملة' : 'أفراد' })),
+            el('p', { class: 'admin-muted' }, el('bdi', { text: o.ref || '' }), when ? ` · ${when}` : '', o.governorate ? ` · ${o.governorate}` : '')),
+          el('div', { class: 'order__side' },
+            el('span', { class: `status-pill status-pill--${o.status}`, text: statusName(o.status) }),
+            typeof o.total === 'number' && o.total > 0 ? el('bdi', { class: 'price', text: formatPrice(o.total) }) : null)),
+        el('div', { class: 'order__body' },
+          el('dl', { class: 'specs order__info' }, rows.map(([k, v]) => el('div', { class: 'specs__row' }, el('dt', { text: k }), el('dd', {}, el('bdi', { text: String(v) }))))),
+          el('div', { class: 'order__contact' },
+            wa ? el('a', { class: 'btn btn--primary btn--sm', href: wa, target: '_blank', rel: 'noopener' }, icon('whatsapp'), 'واتساب العميل') : null,
+            phone ? el('a', { class: 'btn btn--outline btn--sm', href: `tel:${phone}` }, icon('phone'), 'اتصال') : null),
+          items.length ? el('table', { class: 'order__items' },
+            el('thead', {}, el('tr', {}, el('th', { text: 'الكتاب' }), el('th', { text: 'الكمية' }), el('th', { text: 'السعر' }), el('th', { text: 'الإجمالي' }))),
+            el('tbody', {}, items.map((it) => el('tr', {},
+              el('td', { text: String(it.name || it.id || '') }),
+              el('td', { text: formatNumber(Number(it.qty) || 0) }),
+              el('td', {}, el('bdi', { text: formatPrice(Number(it.price) || 0) })),
+              el('td', {}, el('bdi', { text: formatPrice((Number(it.price) || 0) * (Number(it.qty) || 0)) }))))),
+            el('tfoot', {}, el('tr', {}, el('td', { text: 'المجموع' }), el('td', { text: formatNumber(Number(o.count) || 0) }), el('td'),
+              el('td', {}, el('bdi', { text: formatPrice(Number(o.total) || 0) }))))) : null,
+          o.type === 'wholesale' ? el('p', { class: 'admin-muted', text: 'طلب عرض سعر: الأسعار المعروضة هي سعر القطعة الحالي على الموقع.' }) : null,
+          el('div', { class: 'order__actions' },
+            el('div', { class: 'field field--inline' }, el('label', { class: 'label', for: statusSel.id, text: 'الحالة' }), statusSel),
+            delWrap)));
+    }
+  }
+
+  /* ======================= الكتب ======================= */
+  function booksPanel(F, view, notAdmin) {
+    const { fs, db } = F;
+    const catalogRef = fs.doc(db, 'catalog', 'main');
+    let products = [];
+    let exists = false;
+    let catalog = null;
+    const listWrap = el('div', { class: 'admin-list' });
+    const addBtn = el('button', { type: 'button', class: 'btn btn--primary', onclick: () => openForm(null) }, icon('plus'), 'إضافة كتاب');
+    const head = el('div', { class: 'admin-section-head admin-section-head--row' },
+      el('div', {}, el('h2', { class: 'admin-section-title', text: 'الكتب' }),
+        el('p', { class: 'admin-muted', text: 'أي تعديل هنا يظهر في الموقع فورًا للزوار الجدد.' })),
+      addBtn);
+    const listView = el('div', {}, head, listWrap);
+    const formView = el('div', { hidden: true });
+    view.replaceChildren(listView, formView);
+    listWrap.replaceChildren(el('p', { class: 'admin-muted', text: 'جارٍ تحميل الكتب…' }));
+
+    getCatalog().then((c) => { catalog = c; render(); }).catch(() => {});
+    const off = fs.onSnapshot(catalogRef, (snap) => {
+      exists = snap.exists();
+      products = exists && Array.isArray(snap.data().products) ? snap.data().products : [];
+      render();
+    }, (err) => {
+      console.error(err);
+      listWrap.replaceChildren(alertBox('تعذّر تحميل الكتب. تحقق من الإنترنت ثم أعد تحميل الصفحة.'));
+    });
+    cleanups.push(off);
+
+    const categories = () => catalog?.categories || [];
+    const catName = (id) => categories().find((c) => c.id === id)?.name || id;
+
+    async function mutate(fn) {
+      await fs.runTransaction(db, async (tx) => {
+        const snap = await tx.get(catalogRef);
+        const current = snap.exists() && Array.isArray(snap.data().products) ? snap.data().products : [];
+        tx.set(catalogRef, { products: fn(current.slice()), updatedAt: fs.serverTimestamp() });
+      });
+    }
+    const handleWriteError = (err, fallback) => {
+      console.error(err);
+      if (err?.code === 'permission-denied') notAdmin();
+      else toast(fallback);
+    };
+
+    function render() {
+      if (!catalog) return;
+      if (!exists) {
+        const builtin = catalog.source === 'file' ? catalog.products.filter((p) => !p.isDemo) : [];
+        listWrap.replaceChildren(el('div', { class: 'admin-empty' },
+          el('p', { class: 'admin-card__title', text: 'قاعدة البيانات فاضية' }),
+          el('p', { class: 'admin-muted', text: builtin.length
+            ? `الموقع حاليًا يعرض الكتب المكتوبة داخل الملف. انقل الـ ${formatNumber(builtin.length)} كتاب بأغلفتهم لقاعدة البيانات عشان تقدر تعدّلهم من هنا.`
+            : 'أضف أول كتاب من زر «إضافة كتاب».' }),
+          builtin.length ? el('button', { type: 'button', class: 'btn btn--primary', onclick: (e) => importBuiltin(builtin, e.currentTarget) }, `نقل ${booksLabel(builtin.length)} لقاعدة البيانات`) : null));
+        return;
+      }
+      if (!products.length) {
+        listWrap.replaceChildren(el('div', { class: 'admin-empty' }, el('p', { text: 'لا توجد كتب. أضف أول كتاب من زر «إضافة كتاب».' })));
+        return;
+      }
+      const soldOut = products.filter((p) => p.available === false).length;
+      listWrap.replaceChildren(
+        el('p', { class: 'admin-muted' }, `${booksLabel(products.length)} · متاح ${formatNumber(products.length - soldOut)} · `, el('bdi', { dir: 'ltr', text: `Sold out ${formatNumber(soldOut)}` })),
+        el('ul', { class: 'admin-books' }, products.map(bookRow)));
+    }
+
+    function thumb(p) {
+      const img = el('img', { alt: '', width: 60, height: 85, loading: 'lazy' });
+      const frame = el('span', { class: 'admin-thumb' }, img);
+      if (p.coverV) loadCover(p.id, p.coverV).then((d) => { if (d) img.src = d; }).catch(() => {});
+      else img.src = placeholderCover({ id: p.id, category: p.category });
+      return frame;
+    }
+
+    function bookRow(p) {
+      const available = p.available !== false;
+      const sw = el('button', {
+        type: 'button', class: 'switch', role: 'switch', 'aria-checked': String(available),
+        'aria-label': `حالة «${p.name}»: ${available ? 'متاح' : 'Sold out'}`,
+      }, el('span', { class: 'switch__track' }, el('span', { class: 'switch__thumb' })), el('span', { class: 'switch__label', text: available ? 'متاح' : 'Sold out' }));
+      sw.addEventListener('click', async () => {
+        sw.disabled = true;
+        try {
+          await mutate((list) => list.map((x) => (x.id === p.id ? { ...x, available: !available } : x)));
+          toast(available ? `«${p.name}» أصبح Sold out.` : `«${p.name}» أصبح متاحًا للطلب.`);
+        } catch (err) { handleWriteError(err, 'تعذّر تغيير الحالة.'); sw.disabled = false; }
+      });
+      const delWrap = el('span', { class: 'admin-book__del' });
+      const resetDel = () => delWrap.replaceChildren(el('button', { type: 'button', class: 'icon-btn admin-danger', 'aria-label': `حذف «${p.name}»`, onclick: askDel }, icon('trash-2')));
+      const askDel = () => delWrap.replaceChildren(
+        el('button', { type: 'button', class: 'btn btn--outline btn--sm', onclick: async () => {
+          try {
+            await mutate((list) => list.filter((x) => x.id !== p.id));
+            await fs.deleteDoc(fs.doc(db, 'covers', p.id)).catch(() => {});
+            toast(`تم حذف «${p.name}».`);
+          } catch (err) { handleWriteError(err, 'تعذّر حذف الكتاب.'); }
+        } }, 'تأكيد الحذف'),
+        el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: resetDel }, 'إلغاء'));
+      resetDel();
+      return el('li', { class: `admin-book${available ? '' : ' is-soldout'}` },
+        thumb(p),
+        el('div', { class: 'admin-book__info' },
+          el('p', { class: 'admin-book__name', text: p.name }),
+          el('p', { class: 'admin-muted' }, catName(p.category), ' · ', el('bdi', { text: formatPrice(Number(p.price) || 0) }),
+            p.pageCount ? ` · ${formatNumber(p.pageCount)} صفحة` : '', p.featured ? ' · مختار في الرئيسية' : '')),
+        el('div', { class: 'admin-book__actions' },
+          sw,
+          el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: () => openForm(p) }, 'تعديل'),
+          delWrap));
+    }
+
+    /* ---------- نقل كتب الملف لقاعدة البيانات ---------- */
+    async function importBuiltin(list, btn) {
+      btn.disabled = true;
+      try {
+        const out = [];
+        for (let i = 0; i < list.length; i += 1) {
+          const p = list[i];
+          btn.textContent = `جارٍ النقل… ${formatNumber(i + 1)} من ${formatNumber(list.length)}`;
+          let coverV = null;
+          const src = asset(p.cover);
+          if (src) {
+            const data = canvasToCover(await sourceToCanvas(src));
+            coverV = Date.now() + i;
+            await fs.setDoc(fs.doc(db, 'covers', p.id), { data, v: coverV });
+          }
+          out.push({
+            id: p.id, name: p.name, category: p.category, description: p.description || '', price: p.price,
+            originalPrice: p.originalPrice || null, pageCount: p.pageCount || null, level: p.level || [], ageGroup: p.ageGroup || null,
+            featured: !!p.featured, available: p.available !== false, coverV, createdAt: p.createdAt || new Date().toISOString().slice(0, 10),
+          });
+        }
+        await mutate((current) => [...current, ...out.filter((o) => !current.some((c) => c.id === o.id))]);
+        toast(`تم نقل ${booksLabel(out.length)}.`);
+      } catch (err) {
+        handleWriteError(err, 'تعذّر النقل. أعد المحاولة.');
+        btn.disabled = false;
+        btn.textContent = 'إعادة المحاولة';
+      }
+    }
+
+    /* ---------- نموذج إضافة / تعديل كتاب ---------- */
+    function openForm(p) {
+      const isNew = !p;
+      const id = p?.id || `b-${Date.now().toString(36)}`;
+      let newCover = null;
+      const f = (name, label, input, hint) => el('div', { class: 'field' }, el('label', { class: 'label', for: input.id }, label), input, hint ? el('p', { class: 'hint', text: hint }) : null);
+      const name = el('input', { class: 'input', id: 'bf-name', type: 'text', maxlength: '120', value: p?.name || '' });
+      const cat = el('select', { class: 'select', id: 'bf-cat' }, el('option', { value: '', text: 'اختر القسم' }),
+        categories().map((c) => el('option', { value: c.id, selected: c.id === p?.category, text: c.name })));
+      const price = el('input', { class: 'input', id: 'bf-price', type: 'text', inputmode: 'decimal', dir: 'ltr', value: p ? String(p.price) : '' });
+      const pages = el('input', { class: 'input', id: 'bf-pages', type: 'text', inputmode: 'numeric', dir: 'ltr', value: p?.pageCount ? String(p.pageCount) : '' });
+      const desc = el('textarea', { class: 'textarea', id: 'bf-desc', rows: '3', maxlength: '1200' });
+      desc.value = p?.description || '';
+      const featured = el('input', { type: 'checkbox', id: 'bf-featured', checked: !!p?.featured });
+      const available = el('input', { type: 'checkbox', id: 'bf-available', checked: p ? p.available !== false : true });
+      const file = el('input', { class: 'input input--file', id: 'bf-file', type: 'file', accept: 'image/*,application/pdf' });
+      const part = el('select', { class: 'select', id: 'bf-part' },
+        el('option', { value: 'full', text: 'الصورة كاملة' }),
+        el('option', { value: 'left', text: 'النص الشمال (لو الملف فيه الغلافين جنب بعض)' }),
+        el('option', { value: 'right', text: 'النص اليمين' }));
+      const partField = el('div', { class: 'field', hidden: true }, el('label', { class: 'label', for: 'bf-part', text: 'الجزء المستخدم كغلاف' }), part);
+      const preview = el('img', { class: 'bf-preview__img', alt: 'معاينة الغلاف', width: 240, height: 340 });
+      const previewNote = el('p', { class: 'hint' });
+      const previewBox = el('div', { class: 'bf-preview' }, preview, previewNote);
+      let sourceCanvas = null;
+      if (p?.coverV) loadCover(p.id, p.coverV).then((d) => { if (d && !newCover) preview.src = d; });
+      else preview.src = placeholderCover({ id, category: p?.category || '' });
+
+      const redraw = () => {
+        if (!sourceCanvas) return;
+        newCover = canvasToCover(sourceCanvas, part.value);
+        preview.src = newCover;
+        previewNote.textContent = `حجم الصورة بعد الضغط: ${formatNumber(Math.round(newCover.length * 0.75 / 1024))} كيلوبايت`;
+      };
+      file.addEventListener('change', async () => {
+        const fl = file.files?.[0];
+        setFieldError(file, '');
+        if (!fl) return;
+        previewNote.textContent = 'جارٍ تجهيز الصورة…';
+        try {
+          sourceCanvas = await sourceToCanvas(fl);
+          const landscape = sourceCanvas.width / sourceCanvas.height > 1.15;
+          partField.hidden = false;
+          part.value = landscape ? 'left' : 'full';
+          redraw();
+        } catch (err) {
+          console.error(err);
+          sourceCanvas = null;
+          setFieldError(file, fl.type === 'application/pdf' ? 'تعذّر قراءة ملف PDF. جرّب صورة JPG أو PNG للغلاف.' : 'تعذّر قراءة الصورة. جرّب ملف JPG أو PNG.');
+          previewNote.textContent = '';
+        }
+      });
+      part.addEventListener('change', redraw);
+
+      const msg = el('div', { role: 'alert' });
+      const save = el('button', { type: 'submit', class: 'btn btn--primary btn--lg' }, isNew ? 'إضافة الكتاب' : 'حفظ التعديلات');
+      const form = el('form', { class: 'admin-card book-form', novalidate: true },
+        el('div', { class: 'admin-section-head admin-section-head--row' },
+          el('h2', { class: 'admin-section-title', text: isNew ? 'إضافة كتاب' : `تعديل «${p.name}»` }),
+          el('button', { type: 'button', class: 'btn btn--ghost btn--sm', onclick: closeForm }, 'رجوع للقائمة')),
+        el('div', { class: 'book-form__grid' },
+          el('div', { class: 'form-grid' },
+            f('name', 'اسم الكتاب', name),
+            f('cat', 'القسم', cat),
+            el('div', { class: 'form-grid form-grid--2' },
+              f('price', 'السعر (ج.م)', price),
+              f('pages', el('span', {}, 'عدد الصفحات', el('span', { class: 'opt', text: '(اختياري)' })), pages)),
+            f('desc', el('span', {}, 'وصف الكتاب', el('span', { class: 'opt', text: '(اختياري)' })), desc),
+            el('label', { class: 'check', for: 'bf-available' }, available, el('span', { text: 'متاح للطلب (لو مش متعلّم يظهر Sold out)' })),
+            el('label', { class: 'check', for: 'bf-featured' }, featured, el('span', { text: 'يظهر في «كتب مختارة» في الرئيسية' }))),
+          el('div', { class: 'form-grid' },
+            f('file', 'صورة الغلاف', file, 'صورة JPG أو PNG أو ملف PDF للغلاف. الصورة بتتقص وتتضغط تلقائيًا بنفس مقاس باقي الأغلفة.'),
+            partField,
+            previewBox)),
+        msg,
+        el('div', { class: 'form-actions form-actions--row' }, save, el('button', { type: 'button', class: 'btn btn--ghost', onclick: closeForm }, 'إلغاء')));
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.replaceChildren();
+        [name, cat, price, pages].forEach((x) => setFieldError(x, ''));
+        const priceVal = Number(toLatinDigits(price.value).replace(',', '.'));
+        const pagesVal = pages.value.trim() ? Number(toLatinDigits(pages.value)) : null;
+        let bad = null;
+        const fail = (x, m) => { setFieldError(x, m); bad = bad || x; };
+        if (name.value.trim().length < 2) fail(name, 'اكتب اسم الكتاب.');
+        if (!cat.value) fail(cat, 'اختر القسم.');
+        if (!price.value.trim() || !Number.isFinite(priceVal) || priceVal < 0) fail(price, 'اكتب السعر بالأرقام.');
+        if (pagesVal !== null && (!Number.isInteger(pagesVal) || pagesVal < 1)) fail(pages, 'اكتب عدد الصفحات رقم صحيح أو سيبه فاضي.');
+        if (bad) { bad.focus(); return; }
+
+        save.disabled = true;
+        save.textContent = 'جارٍ الحفظ…';
+        try {
+          let coverV = p?.coverV || null;
+          if (newCover) {
+            coverV = Date.now();
+            await fs.setDoc(fs.doc(db, 'covers', id), { data: newCover, v: coverV });
+          }
+          const record = {
+            id, name: name.value.trim(), category: cat.value, description: desc.value.trim(), price: priceVal,
+            originalPrice: p?.originalPrice || null, pageCount: pagesVal, level: p?.level || [], ageGroup: p?.ageGroup || null,
+            featured: featured.checked, available: available.checked, coverV, createdAt: p?.createdAt || new Date().toISOString().slice(0, 10),
+          };
+          await mutate((list) => (isNew ? [record, ...list] : list.map((x) => (x.id === id ? record : x))));
+          toast(isNew ? `تمت إضافة «${record.name}».` : `تم حفظ «${record.name}».`);
+          closeForm();
+        } catch (err) {
+          console.error(err);
+          if (err?.code === 'permission-denied') { notAdmin(); return; }
+          msg.replaceChildren(alertBox('تعذّر الحفظ. تحقق من الإنترنت وأعد المحاولة.'));
+          save.disabled = false;
+          save.textContent = isNew ? 'إضافة الكتاب' : 'حفظ التعديلات';
+        }
+      });
+
+      formView.replaceChildren(form);
+      listView.hidden = true;
+      formView.hidden = false;
+      window.scrollTo(0, 0);
+      name.focus();
+    }
+
+    function closeForm() {
+      formView.hidden = true;
+      formView.replaceChildren();
+      listView.hidden = false;
+    }
+  }
+};
+
+/* =====================================================================
    التنقل بين الصفحات (Router) — الروابط بالشكل #/books و #/product/<id>
    ===================================================================== */
 const ROUTES = {
@@ -3485,6 +4432,7 @@ const ROUTES = {
   about: { page: 'about', nav: 'about' },
   contact: { page: 'contact', nav: 'contact' },
   policies: { page: 'policies', nav: 'policies' },
+  admin: { page: 'admin', nav: '' },
 };
 let routeController = null;
 let firstRoute = true;
