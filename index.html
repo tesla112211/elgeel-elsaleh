@@ -934,6 +934,45 @@ main:focus { outline: none; }
 .bf-preview { display: grid; gap: var(--space-2); justify-items: start; }
 .bf-preview__img { width: 200px; aspect-ratio: 600 / 849; height: auto; object-fit: cover; border-radius: var(--radius-md); background: var(--color-bg-soft); border: 1px solid var(--color-border); }
 .form-actions--row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* ===================== التحليلات ===================== */
+.an { display: grid; gap: var(--space-4); }
+.an-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+@media (min-width: 900px) { .an-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.an-tile { display: grid; gap: 0.2rem; padding: var(--space-4); background: var(--color-bg-soft); border-radius: var(--radius-lg); min-width: 0; }
+.an-tile__label { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.an-tile__value { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); line-height: 1.3; font-variant-numeric: tabular-nums; }
+.an-tile__foot { font-size: var(--fs-xs); color: var(--color-text-muted); min-height: 1.4em; }
+.an-delta { font-weight: 600; }
+.an-delta--up { color: var(--brand-petrol); }
+.an-delta--down { color: var(--brand-ink); text-decoration: underline; text-decoration-color: var(--brand-sage); }
+.an-grid { display: grid; gap: var(--space-4); }
+@media (min-width: 900px) { .an-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.an-card { display: grid; gap: var(--space-3); align-content: start; padding: var(--space-4) var(--space-5); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); min-width: 0; }
+.an-card__title { font-size: var(--fs-md); font-weight: 500; }
+.an-chart-wrap { position: relative; }
+.an-chart { display: block; max-width: 100%; overflow: visible; }
+.an-chart-wrap { min-height: 60px; }
+.an-gridline { stroke: var(--brand-mist); stroke-width: 1; }
+.an-axis { fill: var(--color-text-muted); font-size: 11px; font-family: var(--font-body); }
+.an-bar { fill: var(--brand-petrol); }
+.an-hit { fill: transparent; cursor: default; outline: none; }
+.an-hit:hover, .an-hit:focus { fill: #124E6614; }
+.an-tip { position: absolute; top: 0; transform: translateX(-50%); display: grid; gap: 2px; padding: 0.4rem 0.7rem; border-radius: var(--radius-sm); background: var(--brand-ink); color: var(--neutral-white); font-size: var(--fs-xs); white-space: nowrap; pointer-events: none; z-index: 2; text-align: center; }
+.an-tip strong { font-weight: 500; color: var(--brand-mist); }
+.an-bars { display: grid; gap: var(--space-2); }
+.an-bars__row { display: grid; grid-template-columns: minmax(5.5rem, 8.5rem) minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; font-size: var(--fs-sm); }
+.an-bars__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.an-bars__track { height: 10px; border-radius: var(--radius-pill); background: var(--color-bg-soft); overflow: hidden; }
+.an-bars__fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--brand-petrol); }
+.an-bars__val { color: var(--color-text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.an-table-wrap { overflow-x: auto; }
+.an-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; min-width: 560px; }
+.an-table th, .an-table td { padding: 0.55rem 0.5rem; text-align: start; border-block-end: 1px solid var(--color-border); }
+.an-table th { color: var(--color-text-muted); font-weight: 500; }
+.an-soldout { margin-inline-start: 0.5rem; padding: 0 0.45rem; border-radius: var(--radius-sm); background: var(--brand-ink); color: var(--neutral-white); font-size: 0.7rem; }
+.an-status { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.an-note { padding: var(--space-3) var(--space-4); background: var(--color-bg-soft); border-radius: var(--radius-md); }
   </style>
 </head>
 <body>
@@ -2066,6 +2105,54 @@ async function createOrder(order) {
   await fs.addDoc(fs.collection(db, 'orders'), { ...order, status: 'new', createdAt: fs.serverTimestamp() });
 }
 
+/* ---------- إحصائيات الزوار (عدّادات يومية في stats/YYYY-MM-DD) ----------
+   كل حدث = كتابة واحدة تزوّد عدّاد أو اتنين بـ 1. لا يُسجَّل أي بيانات شخصية.
+   أجهزة الأدمن لا تُحسب (بعد أول تسجيل دخول على الجهاز). */
+const cairoDay = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Africa/Cairo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+const statKey = (s) => String(s).toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 60) || 'x';
+function isAdminDevice() { try { return localStorage.getItem('ajs-admin') === '1'; } catch { return false; } }
+function onceThisSession(key) {
+  try {
+    const k = `ajs-t:${cairoDay()}:${key}`;
+    if (sessionStorage.getItem(k)) return false;
+    sessionStorage.setItem(k, '1');
+  } catch { /* بدون تخزين: نحسب الحدث عادي */ }
+  return true;
+}
+function bumpStats(fields) {
+  if (!BACKEND || isAdminDevice() || /bot|crawl|spider|lighthouse/i.test(navigator.userAgent)) return;
+  fbCore().then(({ fs, db }) => {
+    const data = {};
+    fields.slice(0, 3).forEach((f) => { data[f] = fs.increment(1); });
+    return fs.setDoc(fs.doc(db, 'stats', cairoDay()), data, { merge: true });
+  }).catch(() => {});
+}
+function detectSource() {
+  const qs = new URLSearchParams(location.search);
+  const utm = qs.get('utm_source');
+  if (utm) return statKey(utm);
+  if (qs.has('fbclid')) return 'facebook';
+  if (qs.has('gclid')) return 'google';
+  let host = '';
+  try { host = document.referrer ? new URL(document.referrer).hostname : ''; } catch { /* */ }
+  if (!host || host === location.hostname) return 'direct';
+  if (/facebook|fb\.|messenger/.test(host)) return 'facebook';
+  if (/instagram/.test(host)) return 'instagram';
+  if (/google\./.test(host)) return 'google';
+  if (/tiktok/.test(host)) return 'tiktok';
+  if (/youtube|youtu\.be/.test(host)) return 'youtube';
+  if (/whatsapp|wa\.me/.test(host)) return 'whatsapp';
+  if (/t\.co$|twitter|x\.com/.test(host)) return 'twitter';
+  return 'other';
+}
+function trackVisit() {
+  if (location.hash.startsWith('#/admin') || !onceThisSession('v')) return;
+  const dev = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+  bumpStats(['v', `dev_${dev}`, `src_${detectSource()}`]);
+}
+function trackProductView(id) { if (onceThisSession(`pv_${id}`)) bumpStats(['pv', `pv_${statKey(id)}`]); }
+function trackAddToCart(id) { bumpStats(['atc', `atc_${statKey(id)}`]); }
+
 /* ---------- إشعار الطلب الجديد على موبايل الأدمن (تطبيق ntfy) ----------
    لا يحتوي الإشعار على اسم العميل أو رقمه، لأن قناة الإشعارات يمكن نظريًا أن يعرفها غيرك.
    التفاصيل الكاملة تظهر فقط داخل لوحة الإدارة. */
@@ -3067,6 +3154,7 @@ function addToCart(catalog, product, qty = 1) {
     : `أُضيف «${product.name}» إلى السلة.`;
   toast(msg, { link: { href: pageUrl('cart.html'), text: 'عرض السلة' } });
   track('AddToCart', { content_ids: [product.id], content_type: 'product', value: product.price * qty });
+  trackAddToCart(product.id);
   return res;
 }
 
@@ -3374,6 +3462,7 @@ PAGES.product = (route) => {
     root.removeAttribute('aria-busy');
     root.replaceChildren(el('article', { class: 'product' }, gallery(product), info));
     track('ViewContent', { content_ids: [product.id], content_type: 'product', value: product.price });
+    trackProductView(product.id);
 
     const related = catalog.products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
     if (related.length) {
@@ -4022,11 +4111,12 @@ PAGES.admin = (route, signal) => {
   /* ======================= اللوحة ======================= */
   function renderPanel(F, user) {
     const { fs, db } = F;
-    let tab = route.params.get('tab') === 'books' ? 'books' : 'orders';
+    try { localStorage.setItem('ajs-admin', '1'); } catch { /* */ }
+    let tab = ['books', 'analytics'].includes(route.params.get('tab')) ? route.params.get('tab') : 'orders';
     const ordersBadge = el('span', { class: 'admin-tab__badge', hidden: true });
     const tabBtn = (id, label, extra) => el('button', { type: 'button', class: 'admin-tab', dataset: { tab: id }, 'aria-pressed': String(tab === id) }, label, extra || null);
     const tabs = el('div', { class: 'admin-tabs', role: 'group', 'aria-label': 'أقسام اللوحة' },
-      tabBtn('orders', 'الطلبات', ordersBadge), tabBtn('books', 'الكتب'));
+      tabBtn('orders', 'الطلبات', ordersBadge), tabBtn('analytics', 'التحليلات'), tabBtn('books', 'الكتب'));
     const body = el('div', { class: 'admin-body' });
     const bar = el('div', { class: 'admin-bar' },
       el('div', {}, el('h1', { class: 'admin-bar__title', text: 'لوحة الإدارة' }), el('p', { class: 'admin-muted' }, el('bdi', { dir: 'ltr', text: user.email || '' }))),
@@ -4035,12 +4125,16 @@ PAGES.admin = (route, signal) => {
 
     const ordersView = el('div');
     const booksView = el('div');
-    body.replaceChildren(ordersView, booksView);
+    const analyticsView = el('div');
+    body.replaceChildren(ordersView, analyticsView, booksView);
+    let analyticsStarted = false;
     const show = () => {
       ordersView.hidden = tab !== 'orders';
       booksView.hidden = tab !== 'books';
+      analyticsView.hidden = tab !== 'analytics';
+      if (tab === 'analytics' && !analyticsStarted) { analyticsStarted = true; analyticsPanel(F, analyticsView, () => notAdmin()); }
       $$('.admin-tab', tabs).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tab === tab)));
-      history.replaceState(null, '', tab === 'books' ? '#/admin?tab=books' : '#/admin');
+      history.replaceState(null, '', tab === 'orders' ? '#/admin' : `#/admin?tab=${tab}`);
     };
     tabs.addEventListener('click', (e) => {
       const b = e.target.closest('.admin-tab');
@@ -4207,6 +4301,320 @@ PAGES.admin = (route, signal) => {
             el('div', { class: 'field field--inline' }, el('label', { class: 'label', for: statusSel.id, text: 'الحالة' }), statusSel),
             delWrap)));
     }
+  }
+
+  /* ======================= التحليلات ======================= */
+  function analyticsPanel(F, view, notAdmin) {
+    const { fs, db } = F;
+    const RANGES = [{ id: 1, name: 'اليوم' }, { id: 7, name: '7 أيام' }, { id: 30, name: '30 يوم' }, { id: 90, name: '90 يوم' }];
+    const SOURCE_NAMES = { direct: 'مباشر', facebook: 'فيسبوك', instagram: 'إنستجرام', google: 'جوجل', tiktok: 'تيك توك', youtube: 'يوتيوب', whatsapp: 'واتساب', twitter: 'X / تويتر', other: 'مواقع أخرى' };
+    const WEEKDAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const pct = (a, b) => (b ? (a / b) * 100 : 0);
+    const fmtPct = (v) => `${formatNumber(Math.round(v * 10) / 10)}%`;
+    const money = (v) => formatPrice(Math.round(v));
+    const cairoParts = (d) => {
+      const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Africa/Cairo', hour: 'numeric', hourCycle: 'h23', weekday: 'short' }).formatToParts(d).map((x) => [x.type, x.value]));
+      return { hour: Number(parts.hour) % 24, weekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts.weekday) };
+    };
+    const dayShift = (key, n) => { const d = new Date(`${key}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+    const shortDay = new Intl.DateTimeFormat('ar-EG-u-nu-latn', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+    const labelDay = (key) => shortDay.format(new Date(`${key}T12:00:00Z`));
+
+    let range = 30;
+    let products = [];
+    const rangeRow = el('div', { class: 'chip-row admin-chips', role: 'group', 'aria-label': 'الفترة' });
+    const exportBtn = el('button', { type: 'button', class: 'btn btn--outline btn--sm' }, icon('clipboard-list'), 'تصدير الطلبات (Excel)');
+    const out = el('div', { class: 'an' });
+    view.replaceChildren(
+      el('div', { class: 'admin-section-head admin-section-head--row' },
+        el('div', {}, el('h2', { class: 'admin-section-title', text: 'التحليلات' }),
+          el('p', { class: 'admin-muted', text: 'المبيعات من الطلبات، وسلوك الزوار من عدّادات الموقع. الأيام بتوقيت القاهرة.' })),
+        exportBtn),
+      rangeRow, out);
+    const drawRange = () => rangeRow.replaceChildren(...RANGES.map((r) => el('button', { type: 'button', class: 'chip', dataset: { value: r.id }, 'aria-pressed': String(r.id === range), text: r.name })));
+    rangeRow.addEventListener('click', (e) => {
+      const c = e.target.closest('.chip');
+      if (!c) return;
+      range = Number(c.dataset.value);
+      drawRange();
+      load();
+    });
+    drawRange();
+
+    let lastData = null;
+    exportBtn.addEventListener('click', () => {
+      if (!lastData) return;
+      const rows = [['رقم الطلب', 'التاريخ', 'النوع', 'الحالة', 'الاسم', 'الجهة', 'الموبايل', 'المحافظة', 'العنوان', 'الكتب', 'عدد النسخ', 'الإجمالي', 'ملاحظات']];
+      lastData.orders.forEach((o) => rows.push([
+        o.ref || '', o.createdAt?.toDate ? dateFmt.format(o.createdAt.toDate()) : '', o.type === 'wholesale' ? 'حضانة' : 'أفراد', statusName(o.status),
+        o.name || '', o.org || '', o.phone || '', o.governorate || '', o.address || '',
+        (o.items || []).map((i) => `${i.name} × ${i.qty}`).join(' | '), o.count || 0, o.total || 0, [o.notes, o.other].filter(Boolean).join(' / '),
+      ]));
+      const csv = '﻿' + rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+      const a = el('a', { href: URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })), download: `orders-${cairoDay()}.csv` });
+      document.body.append(a);
+      a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    });
+
+    fs.getDoc(fs.doc(db, 'catalog', 'main')).then((snap) => { products = snap.exists() ? snap.data().products || [] : []; if (lastData) render(lastData); }).catch(() => {});
+
+    let token = 0;
+    async function load() {
+      const my = ++token;
+      out.replaceChildren(el('p', { class: 'admin-muted', text: 'جارٍ حساب الأرقام…' }));
+      const today = cairoDay();
+      const start = dayShift(today, -(range - 1));
+      const prevStart = dayShift(start, -range);
+      const fromDate = new Date(`${prevStart}T00:00:00+02:00`);
+      fromDate.setUTCHours(fromDate.getUTCHours() - 2); // هامش لفرق التوقيت الصيفي
+      try {
+        const [oSnap, sSnap] = await Promise.all([
+          fs.getDocs(fs.query(fs.collection(db, 'orders'), fs.where('createdAt', '>=', fs.Timestamp.fromDate(fromDate)), fs.orderBy('createdAt', 'desc'))),
+          fs.getDocs(fs.query(fs.collection(db, 'stats'), fs.where(fs.documentId(), '>=', prevStart), fs.where(fs.documentId(), '<=', today))),
+        ]);
+        if (my !== token) return;
+        const all = oSnap.docs.map((d) => ({ id: d.id, ...d.data() })).filter((o) => o.createdAt?.toDate);
+        all.forEach((o) => { o.day = cairoDay(o.createdAt.toDate()); });
+        const stats = Object.fromEntries(sSnap.docs.map((d) => [d.id, d.data()]));
+        const days = Array.from({ length: range }, (_, i) => dayShift(start, i));
+        const prevDays = Array.from({ length: range }, (_, i) => dayShift(prevStart, i));
+        lastData = {
+          days, stats, prevDays,
+          orders: all.filter((o) => o.day >= start && o.day <= today),
+          prevOrders: all.filter((o) => o.day >= prevStart && o.day < start),
+        };
+        render(lastData);
+      } catch (err) {
+        console.error(err);
+        if (err?.code === 'permission-denied') {
+          out.replaceChildren(el('div', { class: 'form-alert form-alert--error' }, icon('circle-alert'),
+            el('p', { text: 'مفيش صلاحية لقراءة الإحصائيات. حدّث قواعد الأمان على Firebase بالنسخة الأخيرة (فيها جزء stats) واضغط Publish.' })));
+        } else out.replaceChildren(alertBox('تعذّر تحميل التحليلات. تحقق من الإنترنت وأعد المحاولة.'));
+      }
+    }
+
+    /* ---------- الحسابات ---------- */
+    function summarize(orders, days, stats) {
+      const live = orders.filter((o) => o.status !== 'cancelled');
+      const retail = live.filter((o) => o.type !== 'wholesale');
+      const ws = live.filter((o) => o.type === 'wholesale');
+      const sum = (arr, f) => arr.reduce((s, x) => s + (Number(f(x)) || 0), 0);
+      const stat = (k) => days.reduce((s, d) => s + (Number(stats[d]?.[k]) || 0), 0);
+      const revenue = sum(retail, (o) => o.total);
+      return {
+        revenue, retailCount: retail.length, wsCount: ws.length,
+        wsCopies: sum(ws, (o) => o.count), copies: sum(retail, (o) => o.count),
+        aov: retail.length ? revenue / retail.length : 0,
+        cancelled: orders.filter((o) => o.status === 'cancelled').length,
+        total: orders.length,
+        visits: stat('v'), views: stat('pv'), adds: stat('atc'),
+      };
+    }
+
+    function delta(cur, prev) {
+      if (!prev && !cur) return null;
+      if (!prev) return { text: 'جديد', dir: 'up' };
+      const d = ((cur - prev) / prev) * 100;
+      return { text: `${d >= 0 ? '+' : '−'}${formatNumber(Math.abs(Math.round(d)))}%`, dir: d > 0 ? 'up' : d < 0 ? 'down' : 'flat' };
+    }
+
+    function tile(label, value, dl, hint) {
+      return el('div', { class: 'an-tile' },
+        el('p', { class: 'an-tile__label', text: label }),
+        el('p', { class: 'an-tile__value' }, el('bdi', { text: value })),
+        el('p', { class: 'an-tile__foot' },
+          dl ? el('span', { class: `an-delta an-delta--${dl.dir}` }, el('bdi', { dir: 'ltr', text: dl.text })) : null,
+          el('span', { text: dl ? ` ${hint || 'عن الفترة السابقة'}` : (hint || '') })));
+    }
+
+    /* ---------- رسم الأعمدة (SVG) ---------- */
+    function niceMax(v) {
+      if (v <= 0) return 1;
+      const p = 10 ** Math.floor(Math.log10(v));
+      const n = v / p;
+      return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p;
+    }
+    function columnChart({ labels, values, format, tipLabels, height = 180 }) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const s = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); if (text != null) e.textContent = text; return e; };
+      const tip = el('div', { class: 'an-tip', hidden: true });
+      const wrap = el('div', { class: 'an-chart-wrap' }, tip);
+      const max = niceMax(Math.max(...values, 0));
+      const n = values.length;
+      let lastW = 0;
+      const draw = (W) => {
+        if (!W || Math.abs(W - lastW) < 4) return;
+        lastW = W;
+        const H = height;
+        const padT = 12; const padB = 26; const padL = 40; const padR = 6;
+        const step = (W - padL - padR) / n;
+        const bw = Math.max(2, Math.min(28, step - 2));
+        const y = (v) => padT + (H - padT - padB) * (1 - v / max);
+        const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, class: 'an-chart', role: 'img', direction: 'ltr' });
+        [0, 0.5, 1].forEach((t) => {
+          const yy = y(max * t);
+          svg.append(s('line', { x1: padL, x2: W - padR, y1: yy, y2: yy, class: 'an-gridline' }));
+          svg.append(s('text', { x: padL - 6, y: yy + 4, 'text-anchor': 'end', class: 'an-axis' }, formatNumber(Math.round(max * t))));
+        });
+        const maxLabels = Math.max(2, Math.floor((W - padL) / 62));
+        const every = Math.max(1, Math.ceil(n / maxLabels));
+        values.forEach((v, i) => {
+          const x = padL + i * step + (step - bw) / 2;
+          const top = y(v);
+          const h = Math.max(0, H - padB - top);
+          if (v > 0) {
+            const r = Math.min(4, bw / 2, h);
+            svg.append(s('path', { class: 'an-bar', d: `M${x},${H - padB} V${top + r} Q${x},${top} ${x + r},${top} H${x + bw - r} Q${x + bw},${top} ${x + bw},${top + r} V${H - padB} Z` }));
+          }
+          if ((n - 1 - i) % every === 0) svg.append(s('text', { x: x + bw / 2, y: H - 8, 'text-anchor': 'middle', class: 'an-axis' }, labels[i]));
+          const hit = s('rect', { x: padL + i * step, y: padT, width: step, height: H - padT - padB, class: 'an-hit', tabindex: '0', 'aria-label': `${tipLabels ? tipLabels[i] : labels[i]}: ${format(v)}` });
+          const show = () => {
+            tip.replaceChildren(el('strong', { text: tipLabels ? tipLabels[i] : labels[i] }), el('span', { text: format(v) }));
+            tip.hidden = false;
+            const box = wrap.getBoundingClientRect();
+            const hb = hit.getBoundingClientRect();
+            tip.style.left = `${Math.min(Math.max(hb.left - box.left + hb.width / 2, 60), box.width - 60)}px`;
+          };
+          hit.addEventListener('mouseenter', show);
+          hit.addEventListener('focus', show);
+          hit.addEventListener('mouseleave', () => { tip.hidden = true; });
+          hit.addEventListener('blur', () => { tip.hidden = true; });
+          svg.append(hit);
+        });
+        wrap.querySelector('svg')?.remove();
+        wrap.prepend(svg);
+      };
+      const ro = new ResizeObserver((entries) => draw(Math.floor(entries[0].contentRect.width)));
+      ro.observe(wrap);
+      cleanups.push(() => ro.disconnect());
+      return wrap;
+    }
+
+    /* شريط أفقي لكل صف (أفضل للأسماء العربية الطويلة) */
+    function barList(rows, { format, empty }) {
+      if (!rows.length || rows.every((r) => !r.value)) return el('p', { class: 'admin-muted', text: empty });
+      const max = Math.max(...rows.map((r) => r.value), 1);
+      return el('ul', { class: 'an-bars' }, rows.map((r) => el('li', { class: 'an-bars__row' },
+        el('span', { class: 'an-bars__name', text: r.name }),
+        el('span', { class: 'an-bars__track' }, el('span', { class: 'an-bars__fill', style: `width:${Math.max(r.value ? 2 : 0, (r.value / max) * 100)}%` })),
+        el('bdi', { class: 'an-bars__val', text: format(r) }))));
+    }
+
+    const card = (title, sub, ...content) => el('section', { class: 'an-card' },
+      el('h3', { class: 'an-card__title', text: title }), sub ? el('p', { class: 'admin-muted', text: sub }) : null, ...content);
+
+    /* ---------- العرض ---------- */
+    function render({ days, prevDays, stats, orders, prevOrders }) {
+      const cur = summarize(orders, days, stats);
+      const prev = summarize(prevOrders, prevDays, stats);
+      const conv = pct(cur.retailCount, cur.visits);
+      const prevConv = pct(prev.retailCount, prev.visits);
+      const noVisits = !cur.visits && !prev.visits;
+
+      const tiles = el('div', { class: 'an-tiles' },
+        tile('المبيعات (أفراد)', money(cur.revenue), delta(cur.revenue, prev.revenue)),
+        tile('طلبات الأفراد', formatNumber(cur.retailCount), delta(cur.retailCount, prev.retailCount)),
+        tile('متوسط قيمة الطلب', money(cur.aov), delta(cur.aov, prev.aov)),
+        tile('النسخ المباعة', formatNumber(cur.copies), delta(cur.copies, prev.copies)),
+        tile('الزيارات', formatNumber(cur.visits), delta(cur.visits, prev.visits)),
+        tile('معدل التحويل', fmtPct(conv), cur.visits && prev.visits ? { text: `${conv >= prevConv ? '+' : '−'}${formatNumber(Math.abs(Math.round((conv - prevConv) * 10) / 10))} نقطة`, dir: conv > prevConv ? 'up' : conv < prevConv ? 'down' : 'flat' } : null, 'طلبات ÷ زيارات'),
+        tile('طلبات الحضانات', formatNumber(cur.wsCount), delta(cur.wsCount, prev.wsCount), cur.wsCopies ? `${formatNumber(cur.wsCopies)} نسخة مطلوبة` : ''),
+        tile('الطلبات الملغية', formatNumber(cur.cancelled), null, cur.total ? `${fmtPct(pct(cur.cancelled, cur.total))} من كل الطلبات` : ''));
+
+      const live = orders.filter((o) => o.status !== 'cancelled');
+      const retail = live.filter((o) => o.type !== 'wholesale');
+      const byDay = (fn) => days.map((d) => fn(d));
+      const labels = days.map(labelDay);
+      const revenueChart = columnChart({ labels, values: byDay((d) => retail.filter((o) => o.day === d).reduce((s, o) => s + (o.total || 0), 0)), format: money });
+      const ordersChart = columnChart({ labels, values: byDay((d) => live.filter((o) => o.day === d).length), format: (v) => `${formatNumber(v)} طلب`, height: 140 });
+      const visitsChart = columnChart({ labels, values: byDay((d) => Number(stats[d]?.v) || 0), format: (v) => `${formatNumber(v)} زيارة`, height: 140 });
+
+      /* القمع */
+      const funnelRows = [
+        { name: 'زيارات', value: cur.visits },
+        { name: 'مشاهدات كتب', value: cur.views },
+        { name: 'إضافات للسلة', value: cur.adds },
+        { name: 'طلبات', value: cur.retailCount },
+      ];
+      const funnel = barList(funnelRows, { format: (r) => `${formatNumber(r.value)}${cur.visits && r.name !== 'زيارات' ? ` · ${fmtPct(pct(r.value, cur.visits))}` : ''}`, empty: 'لا توجد زيارات مسجّلة في الفترة دي بعد.' });
+
+      /* أداء الكتب */
+      const sumStat = (k) => days.reduce((s, d) => s + (Number(stats[d]?.[k]) || 0), 0);
+      const sold = new Map();
+      retail.forEach((o) => (o.items || []).forEach((it) => {
+        const x = sold.get(it.id) || { copies: 0, revenue: 0, name: it.name };
+        x.copies += Number(it.qty) || 0;
+        x.revenue += (Number(it.qty) || 0) * (Number(it.price) || 0);
+        sold.set(it.id, x);
+      }));
+      const ids = new Set([...products.map((p) => p.id), ...sold.keys()]);
+      const bookRows = [...ids].map((id) => {
+        const p = products.find((x) => x.id === id);
+        const k = statKey(id);
+        return { id, name: p?.name || sold.get(id)?.name || id, views: sumStat(`pv_${k}`), adds: sumStat(`atc_${k}`), copies: sold.get(id)?.copies || 0, revenue: sold.get(id)?.revenue || 0, soldOut: p ? p.available === false : false };
+      }).filter((r) => r.views || r.adds || r.copies).sort((a, b) => b.revenue - a.revenue || b.views - a.views);
+      const booksTable = bookRows.length
+        ? el('div', { class: 'an-table-wrap' }, el('table', { class: 'an-table' },
+          el('thead', {}, el('tr', {}, ['الكتاب', 'مشاهدات', 'إضافة للسلة', 'نسخ مباعة', 'المبيعات', 'مشاهدة ← سلة'].map((h) => el('th', { text: h })))),
+          el('tbody', {}, bookRows.map((r) => el('tr', {},
+            el('td', {}, r.name, r.soldOut ? el('span', { class: 'an-soldout', text: 'Sold out' }) : null),
+            el('td', { text: formatNumber(r.views) }), el('td', { text: formatNumber(r.adds) }), el('td', { text: formatNumber(r.copies) }),
+            el('td', {}, el('bdi', { text: money(r.revenue) })), el('td', { text: r.views ? fmtPct(pct(r.adds, r.views)) : '—' }))))))
+        : el('p', { class: 'admin-muted', text: 'لما الزوار يشوفوا الكتب ويطلبوا، الأداء هيظهر هنا.' });
+
+      /* المصادر والأجهزة */
+      const keysWith = (prefix) => {
+        const m = new Map();
+        days.forEach((d) => Object.entries(stats[d] || {}).forEach(([k, v]) => { if (k.startsWith(prefix)) m.set(k.slice(prefix.length), (m.get(k.slice(prefix.length)) || 0) + (Number(v) || 0)); }));
+        return [...m].sort((a, b) => b[1] - a[1]);
+      };
+      const sources = barList(keysWith('src_').map(([k, v]) => ({ name: SOURCE_NAMES[k] || k, value: v })),
+        { format: (r) => `${formatNumber(r.value)} · ${fmtPct(pct(r.value, cur.visits))}`, empty: 'لا توجد زيارات مسجّلة بعد.' });
+      const devs = Object.fromEntries(keysWith('dev_'));
+      const devices = barList([{ name: 'موبايل', value: devs.mobile || 0 }, { name: 'كمبيوتر', value: devs.desktop || 0 }],
+        { format: (r) => `${formatNumber(r.value)} · ${fmtPct(pct(r.value, cur.visits))}`, empty: 'لا توجد زيارات مسجّلة بعد.' });
+
+      /* المحافظات */
+      const gov = new Map();
+      live.forEach((o) => { if (o.governorate) { const x = gov.get(o.governorate) || { orders: 0, revenue: 0 }; x.orders += 1; x.revenue += o.type === 'wholesale' ? 0 : (o.total || 0); gov.set(o.governorate, x); } });
+      const govList = barList([...gov].sort((a, b) => b[1].orders - a[1].orders).slice(0, 10).map(([k, v]) => ({ name: k, value: v.orders, revenue: v.revenue })),
+        { format: (r) => `${formatNumber(r.value)} طلب${r.revenue ? ` · ${money(r.revenue)}` : ''}`, empty: 'لا توجد طلبات في الفترة دي.' });
+
+      /* الأوقات */
+      const hours = Array(24).fill(0);
+      const wd = Array(7).fill(0);
+      live.forEach((o) => { const t = cairoParts(o.createdAt.toDate()); hours[t.hour] += 1; if (t.weekday >= 0) wd[t.weekday] += 1; });
+      const hourLabel = (h) => `${h % 12 || 12}${h < 12 ? 'ص' : 'م'}`;
+      const hoursChart = columnChart({ labels: hours.map((_, h) => hourLabel(h)), tipLabels: hours.map((_, h) => `من ${hourLabel(h)} لـ ${hourLabel((h + 1) % 24)}`), values: hours, format: (v) => `${formatNumber(v)} طلب`, height: 140 });
+      const bestDay = wd.some(Boolean) ? WEEKDAYS[wd.indexOf(Math.max(...wd))] : null;
+      const bestHour = hours.some(Boolean) ? hours.indexOf(Math.max(...hours)) : null;
+      const weekList = barList(WEEKDAYS.map((n, i) => ({ name: n, value: wd[i] })), { format: (r) => `${formatNumber(r.value)} طلب`, empty: 'لا توجد طلبات في الفترة دي.' });
+
+      /* الحالات */
+      const statusRow = el('div', { class: 'an-status' }, ORDER_STATUSES.map((st) =>
+        el('span', { class: `status-pill status-pill--${st.id}` }, `${st.name} `, el('bdi', { text: formatNumber(orders.filter((o) => o.status === st.id).length) }))));
+
+      out.replaceChildren(...[
+        noVisits ? el('div', { class: 'form-alert' }, icon('info'), el('p', { text: 'عدّادات الزيارات بتبدأ تشتغل من أول زيارة بعد رفع النسخة دي من الموقع. زياراتك إنت مش بتتحسب على الجهاز اللي سجّلت منه دخول.' })) : null,
+        tiles,
+        el('div', { class: 'an-grid' },
+          card('المبيعات اليومية', 'طلبات الأفراد غير الملغية', revenueChart),
+          card('الطلبات اليومية', 'أفراد وحضانات', ordersChart),
+          card('الزيارات اليومية', null, visitsChart),
+          card('رحلة الزائر', 'من الزيارة لحد الطلب، والنسبة من إجمالي الزيارات', funnel)),
+        card('أداء الكتب', 'مرتبة حسب المبيعات', booksTable),
+        el('div', { class: 'an-grid' },
+          card('مصادر الزيارات', 'من رابط الإعلان أو الموقع اللي جه منه الزائر', sources),
+          card('الأجهزة', null, devices),
+          card('الطلبات حسب المحافظة', null, govList),
+          card('أيام الأسبوع', bestDay ? `أكتر يوم طلبات: ${bestDay}` : null, weekList)),
+        card('أوقات الطلب', bestHour !== null ? `أكتر ساعة طلبات: ${hourLabel(bestHour)} (مفيدة لجدولة الإعلانات)` : null, hoursChart),
+        card('حالات الطلبات في الفترة', null, statusRow),
+        el('p', { class: 'admin-muted an-note', text: 'نصيحة للإعلانات: حط في آخر رابط الموقع في كل إعلان ?utm_source=اسم-المصدر (مثلًا ?utm_source=facebook-ads) عشان يظهر لوحده هنا في المصادر.' })].filter(Boolean));
+    }
+
+    load();
   }
 
   /* ======================= الكتب ======================= */
@@ -4535,6 +4943,7 @@ const DEFAULT_DESCRIPTION = document.querySelector('meta[name="description"]')?.
 initLayout('home');
 window.addEventListener('hashchange', renderRoute);
 renderRoute();
+trackVisit();
 })();
   </script>
 
