@@ -1512,6 +1512,13 @@ const SITE = {
     appId: '1:548433044092:web:c8d2c2fc49ab707aeddff9',
   },
 
+  /* ===== إشعار الطلبات على موبايلك (تطبيق ntfy المجاني) =====
+     نزّل تطبيق ntfy واشترك في القناة المكتوبة هنا بالظبط.
+     لتغيير القناة: اكتب اسم جديد طويل وصعب التخمين هنا وفي التطبيق. ولإيقاف الإشعارات: سيبها فاضية ''. */
+  notify: {
+    ntfyTopic: 'aljeel-orders-ljbljhecgf2wsf4s6m',
+  },
+
   /* (اختياري لاحقًا) رابط خدمة تستقبل طلبات الحضانات، مثل Google Apps Script.
      لو فاضي، يكتفي النموذج بتجهيز رسالة واتساب. */
   formEndpoint: '',
@@ -2057,6 +2064,34 @@ function loadCover(id, v) {
 async function createOrder(order) {
   const { fs, db } = await fbCore();
   await fs.addDoc(fs.collection(db, 'orders'), { ...order, status: 'new', createdAt: fs.serverTimestamp() });
+}
+
+/* ---------- إشعار الطلب الجديد على موبايل الأدمن (تطبيق ntfy) ----------
+   لا يحتوي الإشعار على اسم العميل أو رقمه، لأن قناة الإشعارات يمكن نظريًا أن يعرفها غيرك.
+   التفاصيل الكاملة تظهر فقط داخل لوحة الإدارة. */
+function notifyAdmin(order) {
+  const topic = String(SITE.notify?.ntfyTopic || '').trim();
+  if (!topic) return;
+  const kind = order.type === 'wholesale' ? 'طلب حضانة / جملة' : 'طلب جديد';
+  const lines = [
+    `${order.ref}`,
+    `${order.count} نسخة${order.total ? ` · ${order.total} ${SITE.currency}` : ''}`,
+    order.governorate || '',
+  ].filter(Boolean);
+  try {
+    fetch('https://ntfy.sh/', {
+      method: 'POST',
+      keepalive: true,
+      body: JSON.stringify({
+        topic,
+        title: `${kind} – ${SITE.name}`,
+        message: lines.join('\n'),
+        tags: [order.type === 'wholesale' ? 'school' : 'books'],
+        priority: 5,
+        click: `${location.origin}${location.pathname}#/admin`,
+      }),
+    }).catch(() => {});
+  } catch { /* الإشعار اختياري ولا يوقف الطلب */ }
 }
 
 /* رقم الموبايل المصري بصيغة 01XXXXXXXXX */
@@ -3510,6 +3545,7 @@ PAGES.cart = (route, signal) => {
           items: data.lines.map((l) => ({ id: l.product.id, name: l.product.name, price: l.product.price, qty: l.qty })),
           count: data.count, total: data.total,
         });
+        notifyAdmin({ type: 'retail', ref, count: data.count, total: data.total, governorate: gov.value });
         track('Purchase', { value: data.total, num_items: data.count, content_ids: data.lines.map((l) => l.product.id) });
         const waText = `${buildOrderMessage(data, { name: name.value.trim(), governorate: gov.value }, ref)}`;
         clearCart();
@@ -3721,6 +3757,7 @@ PAGES.wholesale = (route) => {
         address: data.district, notes: data.notes, other: data.other, items,
         count: items.reduce((s, i) => s + i.qty, 0), total: items.reduce((s, i) => s + i.price * i.qty, 0),
       });
+      notifyAdmin({ type: 'wholesale', ref, count: items.reduce((s, i) => s + i.qty, 0), total: 0, governorate: data.governorate });
       track('Lead', { content_category: 'wholesale', num_items: items.reduce((s, i) => s + i.qty, 0) });
       const wa = isWhatsAppReady() ? waLink(text) : null;
       form.replaceChildren(el('div', { class: 'state state--success', role: 'status', tabindex: '-1' },
@@ -4049,8 +4086,15 @@ PAGES.admin = (route, signal) => {
     });
 
     const q = fs.query(fs.collection(db, 'orders'), fs.orderBy('createdAt', 'desc'), fs.limit(300));
+    let seen = null;
     const off = fs.onSnapshot(q, (snap) => {
       orders = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      const ids = new Set(orders.map((o) => o.id));
+      if (seen) {
+        const fresh = orders.filter((o) => !seen.has(o.id) && o.status === 'new');
+        if (fresh.length) alertNewOrder(fresh[0]);
+      }
+      seen = ids;
       render();
     }, (err) => {
       console.error(err);
@@ -4058,6 +4102,24 @@ PAGES.admin = (route, signal) => {
       else list.replaceChildren(alertBox('تعذّر تحميل الطلبات. تحقق من الإنترنت ثم أعد تحميل الصفحة.'));
     });
     cleanups.push(off);
+
+    function alertNewOrder(o) {
+      toast(`طلب جديد ${o.ref || ''} – ${o.type === 'wholesale' ? (o.org || o.name || '') : (o.name || '')}`);
+      try { navigator.vibrate?.([200, 100, 200]); } catch { /* */ }
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [0, 0.22].forEach((t) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.frequency.value = 880;
+          gain.gain.setValueAtTime(0.18, ctx.currentTime + t);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.18);
+          osc.connect(gain).connect(ctx.destination);
+          osc.start(ctx.currentTime + t);
+          osc.stop(ctx.currentTime + t + 0.2);
+        });
+      } catch { /* الصوت يحتاج تفاعل سابق مع الصفحة */ }
+    }
 
     function render() {
       const counts = Object.fromEntries(ORDER_STATUSES.map((s) => [s.id, 0]));
