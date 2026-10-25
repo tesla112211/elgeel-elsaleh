@@ -403,7 +403,7 @@ bdi { unicode-bidi: isolate; }
 .book-card__price { display: flex; align-items: baseline; gap: var(--space-2); margin-block-start: auto; padding-block-start: var(--space-1); }
 .book-card__actions { display: grid; gap: 0.35rem; }
 .book-card__actions .btn { width: 100%; padding-inline: var(--space-2); }
-.book-card.is-unavailable .cover img { opacity: 0.55; }
+.book-card.is-unavailable .cover img { opacity: 0.8; filter: saturate(0.7); }
 @media (min-width: 1024px) {
   .book-card { padding: 0.625rem; }
   .book-card__actions { grid-template-columns: 1fr auto; }
@@ -973,6 +973,211 @@ main:focus { outline: none; }
 .an-soldout { margin-inline-start: 0.5rem; padding: 0 0.45rem; border-radius: var(--radius-sm); background: var(--brand-ink); color: var(--neutral-white); font-size: 0.7rem; }
 .an-status { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .an-note { padding: var(--space-3) var(--space-4); background: var(--color-bg-soft); border-radius: var(--radius-md); }
+
+/* =====================================================================
+   التصميم v2 — نفس ألوان الهوية، طابع أكثر احترافية
+   ===================================================================== */
+
+/* ---------- الهيدر ---------- */
+.site-header { background: #FFFFFFEB; backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); }
+.brand__ar { font-size: 1.45rem; }
+.nav__link { font-size: 0.95rem; }
+.nav__link[aria-current="page"] { box-shadow: inset 0 -2.5px 0 var(--color-primary); }
+
+/* ---------- العناوين العامة ---------- */
+.section-head__title { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.35rem); letter-spacing: -0.01em; }
+.section-head--center { justify-content: center; text-align: center; }
+.section-head--center .section-head__text { margin-inline: auto; }
+.section-head__link { padding: 0.45rem 1rem; border-radius: var(--radius-pill); background: var(--color-bg-soft); }
+.section-head__link:hover { background: var(--brand-mist); text-decoration: none; }
+
+/* ---------- الواجهة (Hero) ---------- */
+.hx {
+  position: relative; overflow: hidden; color: var(--brand-mist);
+  background: radial-gradient(55% 75% at 16% 42%, #124E66E6 0%, #124E6600 72%), var(--brand-ink);
+  padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0;
+}
+.hx__lines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 47px, #D3D9D40F 47px 48px);
+}
+.hx__lines::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: max(16px, calc((100% - var(--container)) / 2 + var(--gutter) - 22px)); width: 2px; background: #D3D9D41A; }
+.hx__grid { position: relative; display: grid; gap: var(--space-6); align-items: center; }
+.hx__copy { position: relative; z-index: 1; }
+.hx__title { color: var(--neutral-white); font-size: clamp(2.5rem, 1.3rem + 5vw, 4.75rem); font-weight: 600; line-height: 1.18; letter-spacing: -0.02em; max-width: 11ch; }
+.hx__lead { margin-block: var(--space-5) var(--space-3); font-size: var(--fs-md); color: var(--brand-mist); }
+.hx__topics { display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 34rem; }
+.hx__topics li { display: inline-flex; }
+.hx__topics li, .hx__topics a {
+  align-items: center; min-height: 36px; padding: 0 0.95rem; border-radius: var(--radius-pill);
+  border: 1px solid #D3D9D447; color: var(--brand-mist); font-size: var(--fs-sm); text-decoration: none;
+  transition: background-color var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+}
+.hx__topics li:has(a) { padding: 0; border: 0; }
+.hx__topics a { display: inline-flex; }
+.hx__topics a:hover { background: var(--brand-mist); color: var(--brand-ink); border-color: var(--brand-mist); }
+.hx__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-6); }
+.hx .btn--light { background: var(--neutral-white); }
+.hx .btn--light:hover { background: var(--brand-mist); }
+@media (max-width: 599px) { .hx__actions .btn { flex: 1 1 100%; } }
+
+.hx__visual { position: relative; }
+.fan { position: relative; height: clamp(220px, 58vw, 320px); }
+.fan__book {
+  position: absolute; left: 50%; bottom: 6%; width: 31%;
+  translate: calc(-50% + var(--x)) calc(-1 * 0% + var(--y)); rotate: var(--r); scale: var(--s);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.fan--3 .fan__book { width: 38%; }
+.fan__book img { width: 100%; height: auto; border-radius: 5px 8px 8px 5px; box-shadow: 0 2px 4px #0000004D, 0 30px 50px -18px #000000A6; }
+.fan__book:hover { transform: translateY(-12px); }
+@media (prefers-reduced-motion: no-preference) {
+  .fan__book { animation: fan-in 900ms var(--ease-out) both; animation-delay: var(--d); }
+}
+@keyframes fan-in { from { opacity: 0; transform: translateY(40px); } }
+@media (min-width: 900px) {
+  .hx__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: var(--space-7); }
+  .fan { height: 460px; }
+}
+
+.hx__stats {
+  position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4) var(--space-5);
+  margin: var(--space-7) 0 0; padding-block: var(--space-5) var(--space-6); border-block-start: 1px solid #D3D9D426;
+}
+.hx__stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (min-width: 760px) { .hx__stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hx__stat:last-child:nth-child(odd) { grid-column: auto; } }
+.hx__stat { display: flex; flex-direction: column-reverse; gap: 0.2rem; }
+.hx__stat dt { font-size: var(--fs-sm); color: #D3D9D4BF; }
+.hx__stat dd { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.35rem, 1rem + 1.2vw, 1.9rem); color: var(--neutral-white); line-height: 1.3; }
+
+/* ---------- الأقسام ---------- */
+.cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+@media (min-width: 900px) { .cat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); } }
+.cat-tile {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; gap: var(--space-3) var(--space-2);
+  min-height: 0; padding: 0.6rem 0.6rem var(--space-4); border-radius: var(--radius-lg);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.cat-tile:hover { border-color: var(--brand-sage); box-shadow: var(--shadow-raised); transform: translateY(-2px); }
+.cat-tile__covers, .cat-tile > .cat-tile__mark { grid-column: 1 / -1; }
+.cat-tile__covers {
+  display: flex; justify-content: center; align-items: flex-end; height: 132px; padding-block-end: 12px;
+  background: var(--color-bg-soft); border-radius: 14px; overflow: hidden;
+}
+.cat-tile__covers img { width: 30%; height: auto; border-radius: 3px 5px 5px 3px; box-shadow: var(--shadow-book); transition: transform var(--dur-base) var(--ease-out); }
+.cat-tile__covers--3 img:nth-child(1) { rotate: 7deg; margin-inline-end: -9%; translate: 0 6px; }
+.cat-tile__covers--3 img:nth-child(2) { z-index: 1; width: 34%; }
+.cat-tile__covers--3 img:nth-child(3) { rotate: -7deg; margin-inline-start: -9%; translate: 0 6px; }
+.cat-tile__covers--2 img:nth-child(1) { rotate: 5deg; margin-inline-end: -6%; }
+.cat-tile__covers--2 img:nth-child(2) { rotate: -5deg; }
+.cat-tile__covers--1 img { width: 36%; }
+.cat-tile:hover .cat-tile__covers img:nth-child(2), .cat-tile:hover .cat-tile__covers--1 img { transform: translateY(-6px); }
+.cat-tile > .cat-tile__mark { width: 100%; height: 132px; border-radius: 14px; font-size: 2rem; }
+.cat-tile > .cat-tile__mark .icon { width: 38px; height: 38px; }
+.cat-tile:hover .cat-tile__mark { background: var(--color-bg-soft); color: var(--color-primary); }
+.cat-tile__text { display: grid; gap: 0.1rem; padding-inline: 0.4rem; min-width: 0; }
+.cat-tile__name { font-size: var(--fs-base); align-self: auto; }
+.cat-tile__arrow { align-self: center; margin-inline-end: 0.4rem; color: var(--color-primary); width: 20px; height: 20px; transition: transform var(--dur-fast); }
+.cat-tile:hover .cat-tile__arrow { transform: translateX(-4px); }
+
+/* ---------- السلسلة ---------- */
+.series { padding-block: clamp(3rem, 2rem + 3vw, 4.5rem); background: var(--brand-petrol); color: var(--brand-mist); overflow: hidden; }
+.series .section-head__title { color: var(--neutral-white); }
+.series .section-head__text { color: var(--brand-mist); }
+.series__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-4); margin-block-end: var(--space-6); }
+.series .btn--primary { background: var(--neutral-white); color: var(--brand-ink); }
+.series .btn--primary:hover { background: var(--brand-mist); color: var(--brand-ink); }
+.series__rail { overflow: hidden; padding-block: 10px 6px; }
+.series__track { display: flex; gap: 20px; width: max-content; padding-inline-end: 20px; }
+.series__item { flex: none; width: clamp(130px, 9rem + 3vw, 180px); display: grid; gap: 0.6rem; text-decoration: none; color: var(--brand-mist); }
+.series__item img { width: 100%; height: auto; border-radius: 4px 7px 7px 4px; box-shadow: 0 2px 4px #0000003D, 0 20px 32px -14px #00000080; transition: transform var(--dur-base) var(--ease-out); }
+.series__item:hover img { transform: translateY(-6px); }
+.series__item:hover { color: var(--neutral-white); }
+.series__name { font-size: var(--fs-sm); text-align: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .series__track { animation: series-roll 70s linear infinite; }
+  .series__rail:hover .series__track, .series__rail:focus-within .series__track { animation-play-state: paused; }
+}
+@keyframes series-roll { to { transform: translateX(50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .series__rail { overflow-x: auto; }
+  .series__item[aria-hidden="true"] { display: none; }
+}
+.series :focus-visible { outline-color: var(--brand-mist); }
+
+/* ---------- بطاقة الكتاب ---------- */
+.book-grid { gap: var(--space-6) var(--space-4); }
+@media (min-width: 1024px) { .book-grid { gap: var(--space-7) var(--space-5); } }
+.book-card { border: 0; background: transparent; padding: 0; border-radius: 0; }
+.book-card:hover { border-color: transparent; }
+.book-card__media .cover {
+  aspect-ratio: 5 / 6; padding: 9% 15% 10%; border-radius: 18px; background: var(--color-bg-soft);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+.book-card__media .cover img {
+  width: auto; height: 100%; max-width: 100%; object-fit: contain; border-radius: 3px 7px 7px 3px;
+  box-shadow: 0 1px 2px #212A3126, 0 14px 24px -10px #212A3166;
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.book-card:hover .book-card__media .cover { background: var(--brand-mist); }
+.book-card:hover .book-card__media .cover img { transform: translateY(-6px); box-shadow: 0 1px 2px #212A3126, 0 24px 34px -12px #212A3180; }
+.book-card__body { padding: var(--space-3) 0.15rem 0; gap: 0.35rem; }
+.book-card__title { font-size: 1.02rem; min-height: 0; }
+.book-card__price { padding-block-start: 0; }
+.book-card__price .price { font-size: 1.1rem; }
+.book-card__actions { margin-block-start: 0.35rem; }
+.soldout-badge { top: 12px; inset-inline-end: 12px; }
+.section--soft .book-card__media .cover { background: var(--neutral-white); }
+.section--soft .book-card:hover .book-card__media .cover { background: var(--brand-mist); }
+
+/* ---------- الخطوات ---------- */
+.steps--home { position: relative; }
+.steps--home .step { background: var(--neutral-white); padding: var(--space-6) var(--space-5); grid-template-columns: 1fr; text-align: center; justify-items: center; gap: var(--space-2); border-radius: var(--radius-xl); }
+.steps--home .step__num { grid-row: auto; width: 52px; height: 52px; background: var(--brand-petrol); border: 0; color: var(--neutral-white); font-size: 1.25rem; margin-block-end: var(--space-2); }
+.steps--home .step__title { font-size: var(--fs-lg); }
+.steps--home .step__text { font-size: var(--fs-base); max-width: 28ch; }
+
+/* ---------- الحضانات ---------- */
+.band { background-color: var(--brand-ink); }
+.band__kicker { font-size: var(--fs-sm); color: #D3D9D4BF; margin-block-end: var(--space-3); }
+.band__list li { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: #D3D9D40F; }
+
+/* ---------- عن + أسئلة ---------- */
+.duo { display: grid; gap: var(--space-7); }
+.duo__about { display: grid; gap: var(--space-4); align-content: start; justify-items: start; }
+.duo__faq { display: grid; gap: var(--space-4); align-content: start; }
+@media (min-width: 960px) { .duo { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: var(--space-8); } }
+.faq__item { border-color: transparent; }
+.faq__item[open] { border-color: var(--brand-mist); }
+
+/* ---------- عناوين الصفحات الداخلية ---------- */
+.page-head {
+  margin-block-end: var(--space-6); padding-block: var(--space-5) var(--space-7);
+  background: var(--color-bg-soft) repeating-linear-gradient(to bottom, transparent 0 39px, #748D921F 39px 40px);
+}
+.page-head__title { font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); letter-spacing: -0.015em; }
+.ws-hero { background: var(--color-bg-soft) repeating-linear-gradient(to bottom, transparent 0 39px, #748D921F 39px 40px); margin-block-end: 0; }
+.ws-hero .step { background: var(--neutral-white); }
+.ws-hero__title { font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); }
+.toolbar { background: var(--neutral-white); border: 1px solid var(--color-border); box-shadow: 0 10px 30px -22px #212A3166; }
+.toolbar__search .input { background: var(--color-bg-soft); border-color: transparent; }
+.toolbar__search .input:focus-visible { background: var(--neutral-white); border-color: var(--color-primary); }
+.toolbar__selects .select { background-color: var(--neutral-white); }
+.page-head + section .toolbar { margin-block-start: calc(var(--space-7) * -1 - var(--space-6) + var(--space-4)); position: relative; }
+
+/* ---------- صفحة الكتاب ---------- */
+.cover--lg { background: var(--color-bg-soft) repeating-linear-gradient(to bottom, transparent 0 35px, #748D921A 35px 36px); }
+.cover--lg img { box-shadow: 0 2px 4px #212A3126, 0 34px 50px -20px #212A3199; }
+.product__title { font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem); }
+.related { background: var(--color-bg-soft); }
+
+/* ---------- السلة ---------- */
+.cart-summary { background: var(--neutral-white); border: 1px solid var(--color-border); box-shadow: 0 18px 40px -30px #212A3180; }
+.cart-item__media .cover { background: var(--color-bg-soft); }
+
+/* ---------- الفوتر ---------- */
+.site-footer { background: var(--brand-ink) repeating-linear-gradient(to bottom, transparent 0 47px, #D3D9D40A 47px 48px); }
+.site-footer .brand__ar { font-size: 1.6rem; }
   </style>
 </head>
 <body>
@@ -992,14 +1197,15 @@ main:focus { outline: none; }
   <noscript><p class="noscript">يحتاج الموقع إلى تفعيل JavaScript لعرض الكتب والسلة.</p></noscript>
 
   <!-- ===================== قوالب الصفحات ===================== -->
-<template id="tpl-home" data-title="" data-description="الجيل الصالح: كتب تعليمية وتأسيسية لأطفال مرحلة الحضانة — تلوين وأنشطة، أرقام وحروف، تربية دينية ولغات. للأسر بالقطعة وللحضانات بالكميات." data-flush="true">
+<template id="tpl-home" data-title="" data-description="الجيل الصالح: سلسلة كتب تعليمية وتأسيسية لأطفال الحضانة — اللغة العربية، الإنجليزية، Math، الحساب، التربية الدينية، جداول الضرب، كراسات التلوين وتنمية المهارات." data-flush="true">
     <!-- الواجهة الرئيسية -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero__grid">
-        <div class="hero__copy">
-          <h1 class="hero__title ruled" id="hero-title">كتب تعليمية وتأسيسية</h1>
-          <p class="hero__lead">سلسلة تعليمية متكاملة لجميع المستويات، تشمل:</p>
-          <ul class="hero__list">
+    <section class="hx on-dark" aria-labelledby="hero-title">
+      <div class="hx__lines" aria-hidden="true"></div>
+      <div class="container hx__grid">
+        <div class="hx__copy">
+          <h1 class="hx__title" id="hero-title">كتب تعليمية وتأسيسية</h1>
+          <p class="hx__lead">سلسلة تعليمية متكاملة لجميع المستويات، تشمل:</p>
+          <ul class="hx__topics" id="hero-topics">
             <li>اللغة العربية</li>
             <li>اللغة الإنجليزية</li>
             <li><bdi>Math</bdi></li>
@@ -1009,33 +1215,52 @@ main:focus { outline: none; }
             <li>كراسات التلوين</li>
             <li>تنمية المهارات</li>
           </ul>
-          <div class="hero__actions">
-            <a class="btn btn--primary btn--lg" href="#/books">تصفّح الكتب</a>
-            <a class="btn btn--outline btn--lg" href="#/wholesale">طلبات الحضانات والجملة</a>
+          <div class="hx__actions">
+            <a class="btn btn--light btn--lg" href="#/books">تصفّح الكتب</a>
+            <a class="btn btn--outline-light btn--lg" href="#/wholesale">طلبات الحضانات والجملة</a>
           </div>
         </div>
-        <div class="hero__visual" id="hero-visual"></div>
+        <div class="hx__visual" id="hero-visual" aria-hidden="true"></div>
+      </div>
+      <div class="container">
+        <dl class="hx__stats" id="hero-stats" hidden></dl>
       </div>
     </section>
 
     <!-- أقسام الكتب -->
-    <section class="section section--tight" id="categories" aria-labelledby="cat-title">
+    <section class="section" id="categories" aria-labelledby="cat-title">
       <div class="container">
         <div class="section-head">
           <div>
             <h2 class="section-head__title" id="cat-title">أقسام الكتب</h2>
-            <p class="section-head__text">اختر القسم لتصل إلى كتبه مباشرة.</p>
+            <p class="section-head__text">ثمانية أقسام تغطي مرحلة الحضانة كاملة.</p>
           </div>
+          <a class="section-head__link" href="#/books">كل الكتب</a>
         </div>
         <div class="cat-grid" id="cat-grid"></div>
       </div>
     </section>
 
+    <!-- السلسلة -->
+    <section class="series" id="series" aria-labelledby="series-title" hidden>
+      <div class="container series__head">
+        <div>
+          <h2 class="section-head__title" id="series-title">سلسلة كراسات التلوين</h2>
+          <p class="section-head__text" id="series-text"></p>
+        </div>
+        <a class="btn btn--primary" id="series-link" href="#/books?category=coloring">شوف السلسلة كاملة</a>
+      </div>
+      <div class="series__rail" id="series-rail"></div>
+    </section>
+
     <!-- الكتب المختارة -->
-    <section class="section section--soft" aria-labelledby="featured-title">
+    <section class="section" aria-labelledby="featured-title">
       <div class="container">
         <div class="section-head">
-          <h2 class="section-head__title" id="featured-title">كتب مختارة</h2>
+          <div>
+            <h2 class="section-head__title" id="featured-title">كتب مختارة</h2>
+            <p class="section-head__text">ابدأ من هنا لو أول مرة تتعرف على السلسلة.</p>
+          </div>
           <a class="section-head__link" href="#/books">عرض كل الكتب</a>
         </div>
         <div class="book-grid" id="featured-grid" aria-busy="true"></div>
@@ -1043,74 +1268,69 @@ main:focus { outline: none; }
     </section>
 
     <!-- كيف تطلب -->
-    <section class="section" aria-labelledby="how-title">
+    <section class="section section--soft" aria-labelledby="how-title">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head section-head--center">
           <div>
-            <h2 class="section-head__title" id="how-title">كيف تطلب؟</h2>
-            <p class="section-head__text">الطلب يتم عبر واتساب، بدون تسجيل حساب.</p>
+            <h2 class="section-head__title" id="how-title">الطلب في 3 خطوات</h2>
+            <p class="section-head__text">بدون تسجيل حساب، وبنتواصل معاك لتأكيد الطلب والتوصيل.</p>
           </div>
         </div>
         <ol class="steps steps--home">
           <li class="step">
             <span class="step__num" aria-hidden="true">1</span>
             <h3 class="step__title">اختر الكتب</h3>
-            <p class="step__text">تصفّح الأقسام وأضف ما تحتاجه إلى السلة.</p>
+            <p class="step__text">تصفّح الأقسام وأضف اللي محتاجه للسلة.</p>
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">2</span>
-            <h3 class="step__title">راجع السلة</h3>
-            <p class="step__text">عدّل الكميات وتأكد من الإجمالي.</p>
+            <h3 class="step__title">اكتب بيانات التوصيل</h3>
+            <p class="step__text">الاسم والموبايل والعنوان، وراجع الإجمالي.</p>
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">3</span>
-            <h3 class="step__title">أرسل الطلب عبر واتساب</h3>
-            <p class="step__text">تُجهَّز رسالة الطلب تلقائيًا، ويصلنا الطلب عند إرسالها.</p>
+            <h3 class="step__title">أكّد الطلب</h3>
+            <p class="step__text">طلبك يوصلنا فورًا، ونكلمك لتأكيد الطلب وميعاد التوصيل.</p>
           </li>
         </ol>
       </div>
     </section>
 
     <!-- الحضانات -->
-    <section class="section section--flush" aria-labelledby="nursery-title">
+    <section class="section" aria-labelledby="nursery-title">
       <div class="container">
         <div class="band on-dark ruled-bg">
           <div class="band__inner">
             <div>
-              <h2 class="band__title" id="nursery-title">لأصحاب الحضانات ومراكز تعليم الأطفال</h2>
-              <p class="band__text">جهّز قائمة الكتب والكميات التي تحتاجها لفصولك، وأرسلها لنا عبر واتساب لنعود إليك بعرض السعر.</p>
+              <p class="band__kicker">للحضانات ومراكز تعليم الأطفال</p>
+              <h2 class="band__title" id="nursery-title">جهّز كتب فصولك كلها في طلب واحد</h2>
+              <p class="band__text">اختار الكتب من كل الأقسام، وحدد الكمية حسب عدد الأطفال، وابعت الطلب علشان نرجعلك بعرض السعر.</p>
               <div class="band__actions">
                 <a class="btn btn--light btn--lg" href="#/wholesale">جهّز طلب الحضانة</a>
               </div>
             </div>
             <ul class="band__list">
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>اختر من كل الأقسام في طلب واحد.</span></li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>حدّد الكمية لكل كتاب حسب عدد الأطفال.</span></li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>استلم عرض السعر على واتساب.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>كل الأقسام في طلب واحد.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>الكمية لكل كتاب حسب عدد الأطفال.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>عرض سعر على رقم الموبايل اللي تكتبه.</span></li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- عن البراند -->
-    <section class="section" aria-labelledby="about-title">
-      <div class="container about-block">
-        <h2 class="about-block__title ruled" id="about-title">عن الجيل الصالح</h2>
-        <div>
+    <!-- عن البراند + الأسئلة -->
+    <section class="section section--soft section--last" aria-labelledby="about-title" id="faq">
+      <div class="container duo">
+        <div class="duo__about">
+          <h2 class="section-head__title" id="about-title">عن الجيل الصالح</h2>
           <p class="about-block__text" data-about-short></p>
-          <a class="btn btn--outline about-block__cta" href="#/about">اعرف المزيد عنّا</a>
+          <a class="btn btn--outline" href="#/about">اعرف المزيد عنّا</a>
         </div>
-      </div>
-    </section>
-
-    <!-- الأسئلة الشائعة -->
-    <section class="section section--soft section--last" aria-labelledby="faq-title" id="faq">
-      <div class="container">
-        <div class="section-head">
+        <div class="duo__faq">
           <h2 class="section-head__title" id="faq-title">أسئلة شائعة</h2>
+          <div class="faq" id="faq-list"></div>
         </div>
-        <div class="faq" id="faq-list"></div>
       </div>
     </section>
 </template>
@@ -3232,30 +3452,91 @@ PAGES.home = () => {
     $('#faq-list').replaceChildren(...faqItems.map((f) =>
       el('details', { class: 'faq__item' }, el('summary', {}, el('span', { text: f.q }), icon('plus')), el('p', { class: 'faq__answer', text: f.a }))));
   } else {
-    $('#faq')?.remove();
+    $('.duo__faq')?.remove();
   }
+  featuredGrid.replaceChildren(...skeletonCards(4));
 
   getCatalog().then((catalog) => {
     reconcile(catalog);
+    const withCover = (list) => list.filter((p) => p.cover);
+
+    /* الواجهة: مروحة من الأغلفة الحقيقية */
     if (SITE.heroImage) {
-      heroVisual.replaceChildren(el('img', { class: 'hero__photo', src: asset(SITE.heroImage), alt: `كتب ${SITE.name}`, width: 1000, height: 800 }));
+      heroVisual.replaceChildren(el('img', { class: 'hero__photo', src: asset(SITE.heroImage), alt: '', width: 1000, height: 800 }));
     } else {
-      const picks = [...catalog.products.filter((p) => p.featured), ...catalog.products.filter((p) => !p.featured)].slice(0, 3);
+      const pool = [...withCover(catalog.products.filter((p) => p.featured)), ...withCover(catalog.products.filter((p) => !p.featured))];
+      const picks = pool.slice(0, 5);
       if (picks.length < 3) heroVisual.remove();
-      else heroVisual.replaceChildren(el('div', { class: 'shelf', 'aria-hidden': 'true' },
-        [picks[1], picks[0], picks[2]].map((p) => el('a', { class: 'shelf__book', href: pageUrl('product.html', { id: p.id }), tabindex: '-1' },
-          coverImg(p, { alt: '', width: 600, height: 849 })))));
+      else {
+        const order = picks.length === 5 ? [picks[3], picks[1], picks[0], picks[2], picks[4]] : [picks[1], picks[0], picks[2]];
+        heroVisual.replaceChildren(el('div', { class: `fan fan--${order.length}` },
+          order.map((p, i) => {
+            const k = i - (order.length - 1) / 2;
+            const style = `--x:${k * (order.length === 5 ? 46 : 58)}%;--y:${Math.abs(k) * 7}%;--r:${k * 7}deg;--s:${k === 0 ? 1 : 0.92};z-index:${10 - Math.abs(k) * 2};--d:${Math.abs(k) * 90}ms`;
+            return el('a', { class: 'fan__book', style, href: pageUrl('product.html', { id: p.id }), tabindex: '-1' },
+            coverImg(p, { alt: '', width: 600, height: 849 }));
+          })));
+      }
     }
+
+    /* أرقام حقيقية من الكتالوج */
+    const real = catalog.products.filter((p) => !p.isDemo).length;
+    const stats = [
+      real ? [formatNumber(real), 'كتاب وكراسة'] : null,
+      [formatNumber(catalog.categories.length), 'أقسام'],
+      ['أفراد وحضانات', 'بالقطعة وبالكميات'],
+    ].filter(Boolean);
+    const statsEl = $('#hero-stats');
+    statsEl.replaceChildren(...stats.map(([v, k]) => el('div', { class: 'hx__stat' }, el('dt', { text: k }), el('dd', {}, el('bdi', { text: v })))));
+    statsEl.hidden = false;
+
+    /* الموضوعات في الواجهة تبقى روابط للأقسام */
+    const byName = new Map(catalog.categories.map((c) => [c.name, c]));
+    $$('#hero-topics li').forEach((li) => {
+      const c = byName.get(li.textContent.trim());
+      if (c) li.replaceChildren(el('a', { href: pageUrl('books.html', { category: c.id }) }, li.textContent.trim()));
+    });
+
+    /* الأقسام: أغلفة كتب القسم لو موجودة */
     catGrid.replaceChildren(...catalog.categories.map((c) => {
-      let mark;
-      if (c.image) mark = el('img', { src: asset(c.image), alt: '', loading: 'lazy', width: 56, height: 56 });
-      else if (c.glyph) mark = el('bdi', { text: c.glyph });
-      else mark = icon(c.icon || 'book-open');
-      return el('a', { class: 'cat-tile', href: pageUrl('books.html', { category: c.id }) },
-        el('span', { class: 'cat-tile__mark', 'aria-hidden': 'true' }, mark),
-        el('span', { class: 'cat-tile__name', text: c.name }),
-        el('span', { class: 'cat-tile__count', text: booksLabel(c.count) }));
+      const covers = withCover(catalog.products.filter((p) => p.category === c.id && !p.isDemo)).slice(0, 3);
+      let visual;
+      if (covers.length) {
+        visual = el('span', { class: `cat-tile__covers cat-tile__covers--${covers.length}`, 'aria-hidden': 'true' },
+          covers.map((p) => coverImg(p, { alt: '', width: 120, height: 170, loading: 'lazy' })));
+      } else {
+        let mark;
+        if (c.image) mark = el('img', { src: asset(c.image), alt: '', loading: 'lazy', width: 56, height: 56 });
+        else if (c.glyph) mark = el('bdi', { text: c.glyph });
+        else mark = icon(c.icon || 'book-open');
+        visual = el('span', { class: 'cat-tile__mark', 'aria-hidden': 'true' }, mark);
+      }
+      return el('a', { class: `cat-tile${covers.length ? ' cat-tile--covers' : ''}`, href: pageUrl('books.html', { category: c.id }) },
+        visual,
+        el('span', { class: 'cat-tile__text' },
+          el('span', { class: 'cat-tile__name', text: c.name }),
+          el('span', { class: 'cat-tile__count', text: c.count ? booksLabel(c.count) : 'قريبًا' })),
+        icon('chevron-left', 'cat-tile__arrow'));
     }));
+
+    /* السلسلة: شريط متحرك بأغلفة أكبر قسم فيه أغلفة حقيقية */
+    const seriesCat = [...catalog.categories]
+      .map((c) => ({ c, list: withCover(catalog.products.filter((p) => p.category === c.id && !p.isDemo)) }))
+      .sort((a, b) => b.list.length - a.list.length)[0];
+    if (seriesCat && seriesCat.list.length >= 5) {
+      const series = $('#series');
+      $('#series-title').textContent = `سلسلة ${seriesCat.c.name}`;
+      $('#series-text').textContent = `${booksLabel(seriesCat.list.length)}. اضغط على أي غلاف لتفاصيله.`;
+      $('#series-link').href = pageUrl('books.html', { category: seriesCat.c.id });
+      const item = (p, hidden) => el('a', { class: 'series__item', href: pageUrl('product.html', { id: p.id }), tabindex: hidden ? '-1' : null, 'aria-hidden': hidden ? 'true' : null },
+        coverImg(p, { alt: hidden ? '' : p.name, width: 300, height: 425, loading: 'lazy' }),
+        el('span', { class: 'series__name', text: p.name }));
+      const track = el('div', { class: 'series__track' }, seriesCat.list.map((p) => item(p, false)), seriesCat.list.map((p) => item(p, true)));
+      $('#series-rail').replaceChildren(track);
+      series.hidden = false;
+    }
+
+    /* المختارة */
     let list = catalog.products.filter((p) => p.featured);
     if (list.length < 4) list = [...list, ...catalog.products.filter((p) => !p.featured)].slice(0, 4);
     featuredGrid.removeAttribute('aria-busy');
